@@ -42,57 +42,7 @@ for e in epochs[:1] :
         i += 1
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-# previous work
-
-
-
-
-
-cmd += models[0]
-
-#cmd += opt[3]
-cmd += epochs[2]
-
-i = 0
-for o in opt[4:7] :
-    arg1 = cmd + o
-    for b in [ bs[2], bs[3] ] :
-        plt = plot + str(i) + ".png "
-        arg2 = arg1 + b + plt
-        print("\n", arg2, "\n")
-        os.system(arg2)
-        i += 1
-
 '''
-i = 0
-for o in [ opt[2], opt[7] ] :
-    arg1 = cmd + o
-    for b in bs:
-        plt = plot + str(i) + ".png "
-        arg2 = arg1 + b + plt
-        print("\n", arg2, "\n")
-        os.system(arg2)
-        i += 1
-'''
-
-'''
-i = 0
 for im in [ imgsz[1], imgsz[2] ] :
     arg1 = cmd + im
     for e in [ epochs[0], epochs[1] ] :
@@ -104,6 +54,7 @@ for im in [ imgsz[1], imgsz[2] ] :
             os.system(arg3)
             i += 1
 '''
+
 
 '''
 i = 0
@@ -124,41 +75,4 @@ for im in [ imgsz[1], imgsz[3], imgsz[4] ] :
 
 
 
-#for o in opt:
-    #out = cmd + o
-    #os.system(out)
-    #out = cmd
-#for b in bs:
-    #out = cmd + b
-    #os.system(out)
-    #out = cmd
-#for a in aug:
-    #out = cmd + a
-    #os.system(out)
-    #out = cmd
-#for o in ["-o RMSprop ", "-o Adadelta2 "]:
-    #out1 = cmd + o
-    #for b in bs:
-        #out2 = out1 + b
-        #os.system(out2)
-        #out2 = out1
-    #out1 = cmd
-#for a in aug[2:3]:
-    #out = cmd + a
-    #os.system(out)
-    #out = cmd
-
-
-
-
-
-
-
-
-"""
-
-
-
-
-
-
+##

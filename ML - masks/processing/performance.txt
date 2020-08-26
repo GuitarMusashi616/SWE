@@ -1,4 +1,6 @@
-build: 1598439090.8785012, model: Quick_Net, epochs: 10, optimzer: Adam2, augmentation: original, image size: 32, batch size: 24, kernel size: 3, dataset size: 110, notes: (none), run time: 10.173017501831055
+build: 1598439090.8785012, model: Quick_Net, epochs: 10, optimzer: Adam2, augmentation: original, 
+image size: 32, batch size: 24, kernel size: 3, dataset size: 110, run time: 10.173017501831055, 
+notes: (none)
 
               precision    recall  f1-score   support
 
@@ -13,7 +15,9 @@ weighted avg       0.40      0.64      0.49        22
  [ 8  0]]
 
 
-build: 1598445993.8010218, model: Quick_Net, epochs: 50, optimzer: Adam2, augmentation: original, image size: 48, batch size: 42, kernel size: 3, dataset size: 120, notes: (none), run time: 45.048635959625244
+build: 1598445993.8010218, model: Quick_Net, epochs: 50, optimzer: Adam2, augmentation: original, 
+image size: 48, batch size: 42, kernel size: 3, dataset size: 120, run time: 45.048635959625244, 
+notes: (none)
 
               precision    recall  f1-score   support
 
@@ -28,7 +32,9 @@ weighted avg       0.97      0.96      0.96        24
  [ 0  4]]
 
 
-build: 1598446195.765839, model: Quick_Net, epochs: 50, optimzer: Adam2, augmentation: original, image size: 48, batch size: 42, kernel size: 5, dataset size: 120, notes: (none), run time: 72.23195362091064
+build: 1598446195.765839, model: Quick_Net, epochs: 50, optimzer: Adam2, augmentation: original, 
+image size: 48, batch size: 42, kernel size: 5, dataset size: 120, run time: 72.23195362091064, 
+notes: (none)
 
               precision    recall  f1-score   support
 
