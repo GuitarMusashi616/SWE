@@ -1,84 +1,14 @@
-0 ../original_dataset/mask/-1.jpeg
-1 ../original_dataset/mask/-2.jpeg
-2 ../original_dataset/mask/-methode-times-prod-web-bin-95c75532-647a-11ea-941d-5e53d1217ea3.jpg
-3 ../original_dataset/mask/.jpeg
-4 ../original_dataset/mask/.png
-5 ../original_dataset/mask/0248_637165903408890770.jpg
-6 ../original_dataset/mask/0410 masks 003.jpg
-7 ../original_dataset/mask/106467352-1585602933667virus-medical-flu-mask-health-protection-woman-young-outdoor-sick-pollution-protective-danger-face_t20_o07dbe.jpg
-8 ../original_dataset/mask/1080x800_newsletter_healthy_living-1080x640.png
-9 ../original_dataset/mask/1140-man-wearing-mask.imgcache.rev7e9ba9dcf73ce1445595459b4508dfdb.jpg
-10 ../original_dataset/mask/1140-woman-in-mask.jpg
-11 ../original_dataset/mask/1920_200430-masks-saxinger-banner.jpg
-12 ../original_dataset/mask/1920_shutterstock-1712038264.jpg
-13 ../original_dataset/mask/200524120611-01-deborah-birx-mask-0522-exlarge-169.jpg
-14 ../original_dataset/mask/20200410-161518-MaskUpRI.jpg
-15 ../original_dataset/mask/20200604_Mask_Guidelines_SC_006-1100x625.jpg
-16 ../original_dataset/mask/21993268_web1_200629-CPL-ColumnWearingMasks_1.jpg
-17 ../original_dataset/mask/2Guard+mask.png
-18 ../original_dataset/mask/3000.jpeg
-19 ../original_dataset/mask/6-mask.jpg
-20 ../original_dataset/mask/602x338_cmsv2_d1250a53-41e4-563e-94c6-5d56cb49f51a-4811590.jpg
-21 ../original_dataset/mask/6122610_generic-people-wearing-masks-AP-photo-TN-img.jpg
-22 ../original_dataset/mask/6BXBEZPJUZCLNAEG7SV2SOYYOI.jpg
-23 ../original_dataset/mask/7581d257-c6e9-4fc4-bc78-b62e47dcfe21_1920x1080.jpg
-24 ../original_dataset/mask/920D8D97-319B-48CE-A791-BB70109A2B5D.jpeg
-25 ../original_dataset/mask/920x920-1.jpg
-26 ../original_dataset/mask/920x920.jpg
-27 ../original_dataset/mask/960x0-1.jpg
-28 ../original_dataset/mask/960x0.jpg
-29 ../original_dataset/mask/AR-200709661.jpeg
-30 ../original_dataset/mask/Drupal-NEWS_Wear-a-mask-in-public-save-a-life.jpg
-31 ../original_dataset/mask/FY20_USNews_Kids-7508-scaled.jpg
-32 ../original_dataset/mask/Female_Mask_Shop_1200x628-facebook-1200x628.jpg
-33 ../original_dataset/mask/GettyImages-1210333963-crop-bd9819b.jpg
-34 ../original_dataset/mask/GettyImages-1213437805-web-1.jpg
-35 ../original_dataset/mask/GettyImages-1218031592.jpg
-36 ../original_dataset/mask/GettyImages-1224326069-645x645.jpg
-37 ../original_dataset/mask/HowToMakeAMask_Cover_1-square640.jpg
-38 ../original_dataset/mask/JWHP2VUTUREIVCIGUFBAPUL2Q4.jpg
-39 ../original_dataset/mask/MW-IJ578_mask_0_20200630120705_ZQ.jpg
-40 ../original_dataset/mask/Mask.jpg
-41 ../original_dataset/mask/ST2IUNYAKJG3VEADB44EBQP3E4.jpg
-42 ../original_dataset/mask/WO3MFCVAQJA5XCP5I3QT2OEWSY.jpg
-43 ../original_dataset/mask/Walmart_employee_mask.jpg
-44 ../original_dataset/mask/Woman+wearing+a+mask_295f0f35-e37d-4adc-b957-44e9d640194a-prv.jpg
-45 ../original_dataset/mask/Woman-mask-grocery-store.jpg
-46 ../original_dataset/mask/Woman-wearing-mask-tiny.jpg
-47 ../original_dataset/mask/Woman-wears-a-facemask-at-the-trainstation-1200x630-1.jpg
-48 ../original_dataset/mask/_104224787_tv050424063.jpg
-49 ../original_dataset/mask/_110755695_gettyimages-1202072951.jpg
-50 ../original_dataset/mask/banner-kidswearmasks.jpg
-51 ../original_dataset/mask/boy-wearing-face-mask.smaller.jpg
-52 ../original_dataset/mask/covid-mask-black-man-getty-scaled.jpg
-53 ../original_dataset/mask/da0330c4-73d2-11ea-ab8f-988daf8efd6f_image_hires_191050.jpg
-54 ../original_dataset/mask/engin-akyurt-WBM97UGM0QA-unsplash-scaled-e1587590012745.jpg
-55 ../original_dataset/mask/face-mask-5008608_1920.jpg
-56 ../original_dataset/mask/face-mask.jpg
-57 ../original_dataset/mask/face-masking-765x310.jpg
-58 ../original_dataset/mask/facemasks.jpg
-59 ../original_dataset/mask/female-nurse-wearing-green-n95-mask.jpg
-60 ../original_dataset/mask/gettyimages-1225396097.jpg
-61 ../original_dataset/mask/halloween-ph-1200x900.png
-62 ../original_dataset/mask/how-to-wear-a-face-mask.jpg
-63 ../original_dataset/mask/how-to-wear-a-mask.jpg
-64 ../original_dataset/mask/iStock-1211835921.jpg
-65 ../original_dataset/mask/kidmask9002.jpg
-66 ../original_dataset/mask/kids-masks_0.jpg
-67 ../original_dataset/mask/mask1-mediumSquareAt3X-v2.jpg
-68 ../original_dataset/mask/mask_confusion_synd_1024.jpg
-69 ../original_dataset/mask/mask_lede_photo.jpg
-70 ../original_dataset/mask/masked_woman.jpg
-71 ../original_dataset/mask/maskne-1200.jpg
-72 ../original_dataset/mask/masks.JPG
-73 ../original_dataset/mask/michael-amadeus-oidJ1WGkIeY-unsplash.jpg
-74 ../original_dataset/mask/mike_dewine_wearing_mask_062320.jpg
-75 ../original_dataset/mask/mom and daughter mask.jpg
-76 ../original_dataset/mask/news-1095863-fa.jpg
-77 ../original_dataset/mask/p-c-mkt03517-covid-19_mask_760x380_web.jpg
-78 ../original_dataset/mask/spring9-740x555.jpg
-79 ../original_dataset/mask/wearing_masks_on_a_train.jpg
-80 ../original_dataset/mask/woman-wearing-face-mask-3902881-scaled.jpg
-81 ../original_dataset/mask/woman-wearing-face-mask-3902882-1100x625.jpg
-82 ../original_dataset/mask/young-worker-putting-mask-on.jpg
-83 ../original_dataset/mask/yourewearing.jpg
+../original_dataset/test
+Zero faces were saved from these images: 
+../original_dataset/test/image_8.jpg
+../original_dataset/test/image_18.jpg
+../original_dataset/test/image_20.jpg
+../original_dataset/test/image_33.jpg
+../original_dataset/test/image_40.jpg
+../original_dataset/test/image_43.jpg
+../original_dataset/test/image_47.jpg
+../original_dataset/test/image_52.jpg
+../original_dataset/test/image_65.jpg
+../original_dataset/test/image_66.jpg
+../original_dataset/test/image_74.jpg
+../original_dataset/test/image_80.jpg
