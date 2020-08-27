@@ -21,11 +21,11 @@ aug = ["-a original ",  "-a light1 ", "-a light2 ", "-a light3 ", "-a medium1 ",
 bs = ["-b xs ", "-b s ", "-b ms ", "-b m ", "-b lg ", "-b xlg "]
 imgsz = ["-i xs ", "-i s ", "-i m ", "-i lg ", "-i xlg "]
 
-# We will be +ing the string args to this command
+# +ing the string args to this command
 cmd = "python3 -W ignore train_a_model.py "
 cmd += models[0]
 
-# We will save a plot of every build by +ing an iterator to the plot filepath
+# Save a plot of every build by +ing an iterator to the plot filepath
 plot = "-p processing/plot"
 i = 0
 
