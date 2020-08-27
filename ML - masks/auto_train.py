@@ -1,5 +1,5 @@
 # Ty Bergstrom
-# auto_test.py
+# auto_train.py
 # CSCE A401
 # August 2020
 # Software Engineering Project
@@ -8,7 +8,7 @@
 # To test out different parameters and hypertuning for increased accuracy
 #
 # $ source ./venv1/bin/activate
-# $ python3 auto_test.py
+# $ python3 auto_train.py
 
 
 import os
