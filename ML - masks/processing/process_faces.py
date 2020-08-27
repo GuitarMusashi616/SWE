@@ -95,7 +95,6 @@ for (itr, img_path) in enumerate(img_paths):
 				filename = os.path.basename(img_path)
 				filename, ext = os.path.splitext(filename)
 				filename = "../processed_dataset/" + dataset + "/" + filename + "_" + str(img_itr) + ext
-				print(filename)
 				# If you were renaming here, you would construct this new name
 				#filename = "../processed_dataset/" + dataset + "/" + str(itr+1) + "_" + str(img_itr) + ".jpg"
 				cv2.imwrite(filename, face)
@@ -113,14 +112,13 @@ for (itr, img_path) in enumerate(img_paths):
 		cv2.imwrite(filename, image)
 
 
-print(total_saved, "total saved faces images")
+print("saved", total_saved, "extracted faces images")
 if len(double_take) > 0:
 	msg = "\n" + str(total_saved) + " faces extracted out of " + str(len(img_paths)) + " images from:\n"
 	f.write(msg)
 	f.write(originals_dir + dataset)
 	f.write("\nZero faces were saved from these images:\n")
 	for img_path in double_take:
-		print(img_path)
 		f.write(img_path)
 		f.write("\n")
 f.write("\n")
