@@ -49,30 +49,9 @@ double_take = [] # images with zero faces saved that you will have to manually p
 # Or if you only want to get the one face with the highest probability of being an actual face
 one_photo_per_img = args["one"]
 f = open("double_take_idx.txt","a+")
-print("processing:", len(img_paths), "input images")
-
-start_clean = True
-if start_clean:
-	# Start with an empty dir, delete everything
-	working_dir = os.getcwd()
-	os.chdir("../processed_dataset/")
-	cmd = "rm " + dataset + "/*"
-	os.system(cmd)
-	os.chdir(working_dir)
+print("processing:", len(img_paths), "input images...")
 
 for (itr, img_path) in enumerate(img_paths):
-	start_rename = True
-	if start_rename:
-		# First rename every image in the original directory to something simple & standard
-		dir_name = os.path.dirname(img_path)
-		file_name = "/image_" + str(itr+1)
-		file_ext = os.path.splitext(img_path)[-1]
-		replace_img_path = dir_name + file_name + file_ext
-		os.rename(img_path, replace_img_path)
-		img_path = replace_img_path
-
-	print(img_path)
-
 	name = img_path.split(os.path.sep)[-2]
 	image = cv2.imread(img_path)
 	(h, w) = image.shape[:2]
@@ -115,14 +94,13 @@ for (itr, img_path) in enumerate(img_paths):
 				total_saved += 1
 				total_saved_per_img += 1
 				img_itr += 1
-				print(filename)
 				if one_photo_per_img:
 					break
 	if total_saved_per_img == 0:
 		double_take.append(img_path)
 
 
-print(total_saved, "total_saved")
+print(total_saved, "total saved faces images")
 if len(double_take) > 0:
 	f.write(originals_dir + dataset)
 	f.write("\nZero faces were saved from these images: \n")
