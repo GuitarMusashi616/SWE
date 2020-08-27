@@ -59,15 +59,17 @@ do
         # Get the extension
         ext=".${img_file##*.}"
         # Manually get the file type if there is no extension
-        if [ $ext == ".$img_file" ]
-            then
-                if [[ $(file --mime-type -b "$img_file") == "image/png" ]]; then
-                    ext=".png"
-                elif [[ $(file --mime-type -b "$img_file") == "image/jpeg" ]]; then
-                    ext=".jpg"
-                else
-                    ext=""
-                fi
+        if [ $ext == ".$img_file" ]; then
+            # Update! images without extensions seem like they are unusable later on!
+            # Skipping them here will delete them which is better now than never
+            continue
+            if [[ $(file --mime-type -b "$img_file") == "image/png" ]]; then
+                ext=".png"
+            elif [[ $(file --mime-type -b "$img_file") == "image/jpeg" ]]; then
+                ext=".jpg"
+            else
+                ext=""
+            fi
         fi
         # Copy to the temp directory, the renamed files are in the format /image_01.jpg
         # Err check that this file doesn't already exist, can really mess things up
@@ -79,6 +81,11 @@ do
         fi
         itr=$((itr+1))
     done
+    # Just make sure that the directory did not end up empty before moving on, that could be bad
+    if [ ! "$(ls -A ../tmp_dir/)" ]; then
+        printf "Err: The directory original_dataset/"${dirsArr[$val]}" is empty\n"
+        exit 1
+    fi
     cd ..
     # Remove the original directory with the weird filenames and replace it with the temp
     rm -rf "${dirsArr[$val]}"
@@ -92,12 +99,14 @@ do
 done
 
 # Run the duplicate removing script
-#python3 remove_duplicates.py -d original_dataset/mask
-#python3 remove_duplicates.py -d original_dataset/without_mask
+#python3 remove_duplicates.py -d original_dataset/mask -r tru
+#python3 remove_duplicates.py -d original_dataset/without_mask -r tru
 
 # Start fresh with empty directories for the processed datasets
 #rm -rf processed_dataset/mask
+#mkdir processed_dataset/mask
 #rm -rf processed_dataset/without_mask
+#mkdir processed_dataset/without_mask
 
 # Run the script to find faces and save them in the processed datasets
 #python3 process_faces.py -d mask
