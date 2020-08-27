@@ -12,3 +12,41 @@ Zero faces were saved from these images:
 ../original_dataset/test/image_66.jpg
 ../original_dataset/test/image_74.jpg
 ../original_dataset/test/image_80.jpg
+../original_dataset/test1
+Zero faces were saved from these images: 
+../original_dataset/test1/image_10.jpg
+../original_dataset/test1/image_16.jpg
+../original_dataset/test1/image_18.jpg
+
+../original_dataset/test1
+Zero faces were saved from these images: 
+../original_dataset/test1/image_10.jpg
+../original_dataset/test1/image_16.jpg
+../original_dataset/test1/image_18.jpg
+
+../original_dataset/test1
+Zero faces were saved from these images: 
+../original_dataset/test1/image_10.jpg
+../original_dataset/test1/image_16.jpg
+../original_dataset/test1/image_18.jpg
+
+../original_dataset/test1
+Zero faces were saved from these images: 
+../original_dataset/test1/image_10.jpg
+../original_dataset/test1/image_16.jpg
+../original_dataset/test1/image_18.jpg
+
+../original_dataset/test1
+Zero faces were saved from these images: 
+../original_dataset/test1/image_10.jpg
+../original_dataset/test1/image_16.jpg
+../original_dataset/test1/image_18.jpg
+
+
+24faces extracted out of 18 from: 
+../original_dataset/test1
+Zero faces were saved from these images: 
+../original_dataset/test1/image_10.jpg
+../original_dataset/test1/image_16.jpg
+../original_dataset/test1/image_18.jpg
+

@@ -43,7 +43,7 @@ detector = cv2.dnn.readNetFromCaffe(proto, model)
 threshold = 0.8 # a probability threshold to decrease false positives
 dataset = args["dataset"]
 img_paths = sorted(list(paths.list_images(originals_dir + dataset)))
-total_saved = 0 # how many total faces from the entire dataset
+total_saved = 0 # how many total faces extracted from the dataset
 double_take = [] # images with zero faces saved that you will have to manually process if you want their face
 # Save time if you know there is only one face per img,
 # Or if you only want to get the one face with the highest probability of being an actual face
@@ -57,20 +57,21 @@ for (itr, img_path) in enumerate(img_paths):
 	(h, w) = image.shape[:2]
 
 	# detect faces in the image
-	imageBlob = cv2.dnn.blobFromImage(cv2.resize(image,
-	(300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0),
-	swapRB=False, crop=False)
+	imageBlob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 
+		1.0, (300, 300), (104.0, 177.0, 123.0), swapRB=False, crop=False)
 	detector.setInput(imageBlob)
 	detections = detector.forward()
 
+	# Counter to check if 0 faces were extracted
 	total_saved_per_img = 0
 
 	if len(detections) < 1:
 		double_take.append(img_path)
 		break
 	else:
-		img_itr = 0 # append to the save filepath if more than one face per photo
-        # Loop through all detected faces
+		# append this iterator to the save filepath if more than one face per image
+		img_itr = 0
+        # Loop through all detected faces in the image
 		for i in range(0, detections.shape[2]):
 			if one_photo_per_img:
     			# Get only the one face that was detected with highest probability
@@ -89,7 +90,14 @@ for (itr, img_path) in enumerate(img_paths):
 				if fW < 64 or fH < 64:
 					continue
 				face = imutils.resize(face, width=256, height=256)
-				filename = "../processed_dataset/" + dataset + "/" + str(itr+1) + "_" + str(img_itr) + ".jpg"
+				# Construct a new filename
+				# preprocess.sh renames good filenames, so these new filenames will share same base as original
+				filename = os.path.basename(img_path)
+				filename, ext = os.path.splitext(filename)
+				filename = "../processed_dataset/" + dataset + "/" + filename + "_" + str(img_itr) + ext
+				print(filename)
+				# If you were renaming here, you would construct this new name
+				#filename = "../processed_dataset/" + dataset + "/" + str(itr+1) + "_" + str(img_itr) + ".jpg"
 				cv2.imwrite(filename, face)
 				total_saved += 1
 				total_saved_per_img += 1
@@ -97,17 +105,25 @@ for (itr, img_path) in enumerate(img_paths):
 				if one_photo_per_img:
 					break
 	if total_saved_per_img == 0:
+		# Update this to the list of images that did not extract a face
 		double_take.append(img_path)
+		filename = originals_dir + "/double_take/" + os.path.basename(img_path)
+		# Or take it a step ahead and save copies of all such files to a separate directory
+		# So you can more quickly find and manually process them
+		cv2.imwrite(filename, image)
 
 
 print(total_saved, "total saved faces images")
 if len(double_take) > 0:
+	msg = "\n" + str(total_saved) + " faces extracted out of " + str(len(img_paths)) + " images from:\n"
+	f.write(msg)
 	f.write(originals_dir + dataset)
-	f.write("\nZero faces were saved from these images: \n")
+	f.write("\nZero faces were saved from these images:\n")
 	for img_path in double_take:
 		print(img_path)
 		f.write(img_path)
 		f.write("\n")
+f.write("\n")
 f.close()
 
 

@@ -1,33 +1,46 @@
 #!/bin/bash
 
-# process.sh
+# preprocess.sh
 # Ty Bergstrom
 # August 2020
 #
-# $ bash process.sh
+# $ bash preprocess.sh
 #
-# This is a good pre-processing step to rename all files
+# This is a good pre-processing step to rename all files, get rid of weird internet filenames
 # It helps in later processing steps when you need to find and manually process some images
 #
-# Need to be careful about renaming programmatically or you will accidentally delete lots of files
-# This script carefully renames the image files, preserving extensions
-# Deletes the originals and does not make backups
+# This was a need for a separate script to rename the image files in the original dataset directory
+# And I wanted to try scripting this instead of python hacks
 #
-# I make a copies of my original datasets before I do anything like this just to be sure
+# Need to be very careful about renaming programmatically or you will accidentally delete lots of files
+# This has been error check fairly well so that bad things don't happen
+# But still it is good to backup your datasets before running anything like this
 #
-# After renaming, it runs the pythons script that searches for and removes duplicate images on every directory
-# Then it runs the face processing script
-# So run this script when you're ready to do all the processing at once
-# Or also this is the only script you need to run if whenever you (regularly) update your databases
+# Additionally afterwords this script can call the other python pre-processing scripts
+# So you can run them all at once the way they are intended to run, see below
+#
+# You should manually rename any file that starts with "-" because commands don't like seeing that
 
 
 cd ../original_dataset
 
 # Manually define the directries - this can be done automatically, but want to be more careful
 dirsArr=("test1" "test2")
+
+# Err check that the directories exist before doing anything, can cause big problems
 for val in "${!dirsArr[@]}"
 do
-    # Make an empty temp directory
+    if [ -d "${dirsArr[$val]}" ]; then
+        continue
+    else
+        printf "Err: The directory original_dataset/"${dirsArr[$val]}" does not exist"
+        exit 1
+    fi
+done
+
+for val in "${!dirsArr[@]}"
+do
+    # Make an empty temp directory - this implementation seems redundant but works much better & safer
     rm -rf tmp_dir
     mkdir tmp_dir
     printf "Working on "${dirsArr[$val]}" directory \n"
@@ -52,7 +65,14 @@ do
         fi
         # Copy to the temp directory, the renamed files are in the format /image_01.jpg
         printf "renaming to this file ../tmp_dir/image_"${itr}""${ext}" \n"
-        cp $img_file ../tmp_dir/image_"${itr}""${ext}"
+        # Err check that this file doesn't already exist, can really mess things up
+        if [ -f "../tmp_dir/image_"${itr}""${ext}"" ]; then
+            printf "Err: the file image_"${itr}""${ext}" already exists"
+            # Just move over the original file name seems to solve it
+            cp $img_file ../tmp_dir/$img_file
+        else
+            cp $img_file ../tmp_dir/image_"${itr}""${ext}"
+        fi
         itr=$((itr+1))
     done
     cd ..
