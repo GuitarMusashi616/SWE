@@ -80,6 +80,12 @@ class Tune:
         return img_sizes[size]
 
 
+    # Pre-set kernel sizes, really only error checking, don't want anything else than 3 or 5
+    def kernel(size):
+        return size == 5
+        return 3
+
+
     # Customized learning rates, not currently supported
     def lr_sched(decay, epochs):
         def step_decay(epoch):
@@ -100,7 +106,7 @@ class Tune:
             return [LearningRateScheduler(poly_decay)]
         elif decay == "reduce":
             lr = ReduceLROnPlateau(monitor='val_acc', patience=5,
-            verbose=1, factor=0.5, min_lr=0.0001)
+                verbose=1, factor=0.5, min_lr=0.0001)
             return [lr]
 
 

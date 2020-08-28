@@ -43,7 +43,7 @@ args = vars(ap.parse_args())
 num_epochs = args["num_epochs"]
 batch_size = Tune.batch_size(args["batch_size"])
 HXW = Tune.img_size(args["imgsz"])
-kernel = args["kernelsize"]
+kernel = Tune.kernel(args["kernelsize"])
 notes = args["notes"]
 start_time = time.time()
 

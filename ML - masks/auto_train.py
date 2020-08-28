@@ -20,6 +20,7 @@ opt = ["-o Adam ", "-o Adam2 ", "-o Adam3 ", "-o Adam4 ", "-o SGD ", "-o SGD2 ",
 aug = ["-a original ",  "-a light1 ", "-a light2 ", "-a light3 ", "-a medium1 ", "-a medium2 ", "-a medium3 ", "-a heavy1 ", "-a heavy2 "]
 bs = ["-b xs ", "-b s ", "-b ms ", "-b m ", "-b lg ", "-b xlg "]
 imgsz = ["-i xs ", "-i s ", "-i m ", "-i lg ", "-i xlg "]
+kernel = ["-k 3", "-k 5"]
 
 # +ing the string args to this command
 cmd = "python3 -W ignore train_a_model.py "
@@ -40,6 +41,9 @@ for e in epochs[:1] :
         print("\n", arg2, "\n")
         os.system(arg2)
         i += 1
+        # args = cmd + e + b + plot + str(i) + ".png"
+        # os.system(cmd)
+        # i += 1
 
 
 '''
