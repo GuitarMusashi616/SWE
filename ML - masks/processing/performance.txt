@@ -119,3 +119,21 @@ Finished auto_train.sh on Fri Aug 28 17:20:09 AKDT 2020
 1598664023.3946526 0.636364%
 1598664012.7201288 0.636364%
 
+build: 1598700264.9560766 0.971014%
+model: Quick_Net, epochs: 20, optimzer: Adam2, augmentation: original, 
+image size: 48, batch size: 42, kernel size: 3, dataset size: 1035, run time: 191.31s
+notes: First run with larger dataset 
+
+              precision    recall  f1-score   support
+
+        mask       1.00      0.95      0.97       116
+without_mask       0.94      1.00      0.97        91
+
+    accuracy                           0.97       207
+   macro avg       0.97      0.97      0.97       207
+weighted avg       0.97      0.97      0.97       207
+
+[[110   6]
+ [  0  91]]
+
+

@@ -12,14 +12,14 @@
 # need to exclude everything else from an image.
 # Make sure to check the processed dataset afterwords and
 # delete any images that aren't actually a face,
-# or manually crop the faces on any that aren't perfect
+# or later you can manually crop the faces on any that aren't perfect
 #
 # Other notes:
 # This outputs some info to a file named double_take_idx.txt
 # It will contain a list of original file paths for any images that did not find a face.
 # To help find images that you need to go back and manually process.
 # Update:
-# Even better I'm just saving those files to original_dataset/double_take/
+# Even better I'm just saving copies of those files to processed_dataset/double_take/
 # So that you can find and manually process those images much quicker
 #
 # This is set up to only process one directory at a time, there's a good reason
@@ -124,7 +124,7 @@ for (itr, img_path) in enumerate(img_paths):
 	if total_saved_per_img == 0:
 		# Update this to the list of images that did not extract a face
 		double_take.append(img_path)
-		filename = originals_dir + "/double_take/" + os.path.basename(img_path)
+		filename = "double_take/" + dataset + "_" + os.path.basename(img_path)
 		# Or take it a step further and save copies of all such files to a separate directory
 		# So you can more quickly find and manually process them
 		cv2.imwrite(filename, image)

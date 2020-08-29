@@ -38,7 +38,7 @@ hash_size = 8
 img_paths = list(paths.list_images(args["dataset"]))
 # Err check that the directory was not empty
 if len(img_paths) < 1:
-	print("Err: The directory", args["dataset"] + len(img_paths) , "was empty")
+	print("Err: The directory", args["dataset"] + str(len(img_paths)) , "was empty")
 	sys.exit(1)
 hashes = {} # dictionary of hashes of the images
 total_duplicates = 0
@@ -46,7 +46,6 @@ total_duplicates = 0
 # Part one, loop through the input images and generate their hashes
 print("Generating hashes...")
 for img_path in img_paths:
-	print(img_path)
 	img = cv2.imread(img_path)
 	img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	img = cv2.resize(img, (hash_size + 1, hash_size))
@@ -78,14 +77,14 @@ for (img_hash, hashed_paths) in hashes.items():
 			cv2.imshow("Duplicates", montage)
 			# You have waitKay(1200) much time to press "s" key to pass deleting ;)
 			if cv2.waitKey(1200) == ord("s"):
-				print("Duplicate image" + path + "was NOT deleted")
+				print("Duplicate image", path, "was NOT deleted")
 				continue
 		# Remove the duplicates
 		if args["remove"]:
 			for path in hashed_paths[1:]:
 				os.remove(path)
 				total_duplicates += 1
-				print("Duplicate image" + path + "was deleted")
+				print("Deleted duplicate image:", path)
 
 print(total_duplicates, "duplicates were removed")
 
