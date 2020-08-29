@@ -13,6 +13,7 @@
 
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 from keras import metrics
 import numpy as np
@@ -24,9 +25,9 @@ matplotlib.use("Agg")
 class Result:
 
     # Print the classification report and confusion matrix
-	def display_metrix(testX, testY, predictions, model, classes, aug, bs):
-		cl = Result.clas_report(testY, predictions, classes)
-		cm = Result.confusion(model, aug, testX, testY, predictions)
+	def display_metrix(test_X, test_Y, predictions, model, classes, aug, bs):
+		cl = Result.clas_report(test_Y, predictions, classes)
+		cm = Result.confusion(model, aug, test_X, test_Y, predictions)
 		print("...classification report\n")
 		print(cl)
 		print("...confusion matrix\n")
@@ -35,14 +36,18 @@ class Result:
 		Result.save_results(cl, cm)
 
 
-	def clas_report(testY, predictions, classes):
-		return classification_report(testY.argmax(axis=1), predictions.argmax(axis=1), target_names=classes)
+	def clas_report(test_Y, predictions, classes):
+		return classification_report(test_Y.argmax(axis=1), predictions.argmax(axis=1), target_names=classes)
 
 
-	def confusion(model, aug, testX, testY, predictions):
-		predIdxs = model.predict_generator(aug.flow(testX, testY))
+	def confusion(model, aug, test_X, test_Y, predictions):
+		predIdxs = model.predict_generator(aug.flow(test_X, test_Y))
 		predIdxs = np.argmax(predIdxs, axis=1)
-		return confusion_matrix(testY.argmax(axis=1), predictions.argmax(axis=1))
+		return confusion_matrix(test_Y.argmax(axis=1), predictions.argmax(axis=1))
+
+
+	def acc_score(test_Y, predictions):
+		return accuracy_score(test_Y.argmax(axis=1), predictions.argmax(axis=1))
 
 
 	def display_plot(plot, epochs, H):
@@ -56,7 +61,8 @@ class Result:
 		plt.title("Training Loss and Accuracy")
 		plt.xlabel("Epoch #")
 		plt.ylabel("Loss/Accuracy")
-		plt.legend(loc="lower left")
+		plt.legend(loc="center right")
+		print("\n", plot, "\n")
 		plt.savefig(plot)
 		plt.show()
 
@@ -72,9 +78,9 @@ class Result:
 
 
 	# Save the build info and parameters to the file
-	def save_info(start_time, model, epochs, opt, aug, imgsz, bs, k, datasize, notes):
+	def save_info(start_time, acc, model, epochs, opt, aug, imgsz, bs, k, datasize, notes):
 		run_time = time.time() - start_time
-		label = "build: {}, model: {}, epochs: {}, optimzer: {}, augmentation: {}, \nimage size: {}, batch size: {}, kernel size: {}, dataset size: {}, run time: {:.2f}s, \nnotes: {}\n".format(start_time, model, epochs, opt, aug, imgsz, bs, k, datasize, run_time, notes)
+		label = "build: {} {:.6}%\nmodel: {}, epochs: {}, optimzer: {}, augmentation: {}, \nimage size: {}, batch size: {}, kernel size: {}, dataset size: {}, run time: {:.2f}s\nnotes: {} \n".format(start_time, acc, model, epochs, opt, aug, imgsz, bs, k, datasize, run_time, notes)
 		f = open("processing/performance.txt","a+")
 		f.write(label)
 		f.write("\n")

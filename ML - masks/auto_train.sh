@@ -1,10 +1,16 @@
 #!/bin/bash
-
+#
+# Ty Bergstrom
+# auto_train.sh
+# CSCE A401
+# August 2020
+# Software Engineering Project
+#
 # bash auto_train.sh
 #
-# Same as auto_train.py
-# Wanted to see how it would be implemented in bash
-# This looks better
+# Build different models automatically and run continuously
+# Using for loops to try different combinations of build parameters
+# To test out different hypertuning for increased accuracy
 
 
 models=("-m Full_Net " "-m Quick_Net ")
@@ -14,34 +20,44 @@ aug=("-a original "  "-a light1 " "-a light2 " "-a light3 " "-a medium1 " "-a me
 bs=("-b xs " "-b s " "-b ms " "-b m " "-b lg " "-b xlg ")
 imgsz=("-i xs " "-i s " "-i m " "-i lg " "-i xlg ")
 kernel=("-k 3" "-k 5")
+epochs=("-e 5 " "-e 10 " "-e 15 ")
 
 source ./venv1/bin/activate
 
+now=`date`
+printf "\n** Beginning auto_train.sh on $now\n\n" >> processing/performance.txt
+
 cmd="python3 -W ignore train_a_model.py -d original_dataset"
+plot="-p processing/plots/plot"
 
 itr=0
 
 # Loop thru optimizers
-for o in "${!opt[@]}"
-do
+#for o in "${!opt[@]}"
+#do
     # Loop thru number epochs
     for e in "${!epochs[@]}"
     do
         # Loop thru batch sizes
-        for b in "${!bs[@]}"
-        do
+        #for b in "${!bs[@]}"
+        #do
             # Loop thru image sizes
-            for i in "${!imgsz[@]}"
-            do
+            #for i in "${!imgsz[@]}"
+            #do
 
-                $cmd ${models[0]} ${opt[$o]} ${epochs[$e]} ${bs[$b]} ${imgsz[$i]} "-p processing/plot_"${itr}".png"
-                printf " $cmd ${models[0]} ${opt[$o]} ${epochs[$e]} ${bs[$b]} ${imgsz[$i]} -p processing/plot_${itr}.png "
+                printf "\n $cmd ${models[0]} ${opt[$o]} ${epochs[$e]} ${bs[$b]} ${imgsz[$i]}-p processing/plots/plot${itr}.png \n"
+                $cmd ${models[0]} ${opt[$o]} ${epochs[$e]} ${bs[$b]} ${imgsz[$i]} ${plot}${itr}".png"
                 itr=$((itr+1))
 
-            done # image sizes
-        done # batch sizes
+            #done # image sizes
+        #done # batch sizes
     done # number of epochs
-done # optimizers
+#done # optimizers
+
+echo Finished auto_train.sh on $now >> processing/performance.txt
+
+# List the 5 builds with the highest accuracy
+grep build processing/performance.txt | sort -k 3 -nr | head -5 | awk '{print $2 " " $3}' >> processing/performance.txt
 
 
 

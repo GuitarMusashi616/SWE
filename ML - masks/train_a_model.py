@@ -29,7 +29,7 @@ import time
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--savemodel", type=str, default="processing/model.model")
 ap.add_argument("-p", "--plot", type=str, default="processing/plot.png")
-ap.add_argument("-d", "--dataset", type=str, default="dataset")
+ap.add_argument("-d", "--dataset", type=str, default="processed_dataset")
 ap.add_argument("-a", "--aug", type=str, default="original")
 ap.add_argument("-m", "--model", type=str, default="Quick_Net")
 ap.add_argument("-o", "--opt", type=str, default="Adam2")
@@ -75,8 +75,8 @@ f.write(pickle.dumps(lb))
 f.close()
 
 print("\n...getting results of training & testing...\n")
-Result.save_info(start_time, args["model"], num_epochs, args["opt"], args["aug"], HXW, batch_size, kernel, len(data), notes)
 predictions = model.predict(test_X, batch_size=batch_size)
+Result.save_info(start_time, Result.acc_score(test_Y, predictions), args["model"], num_epochs, args["opt"], args["aug"], HXW, batch_size, kernel, len(data), notes)
 Result.display_metrix(test_X, test_Y, predictions, model, lb.classes_, aug, batch_size)
 Result.display_plot((args["plot"]), num_epochs, H)
 

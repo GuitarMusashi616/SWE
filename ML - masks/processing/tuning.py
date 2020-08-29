@@ -82,7 +82,8 @@ class Tune:
 
     # Pre-set kernel sizes, really only error checking, don't want anything else than 3 or 5
     def kernel(size):
-        return size == 5
+        if size == 5:
+            return size
         return 3
 
 
