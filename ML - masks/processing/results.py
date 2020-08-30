@@ -32,6 +32,7 @@ class Result:
 		f.write(pickle.dumps(lb))
 		f.close()
 
+
     # Print the classification report and confusion matrix
 	def display_metrix(test_X, test_Y, predictions, model, classes, aug, bs):
 		cl = Result.clas_report(test_Y, predictions, classes)
@@ -66,9 +67,9 @@ class Result:
 		plt.plot(np.arange(0, N), H.history["val_loss"], label="val_loss")
 		plt.plot(np.arange(0, N), H.history["acc"], label="train_acc")
 		plt.plot(np.arange(0, N), H.history["val_acc"], label="val_acc")
-		plt.title("Training Loss and Accuracy")
-		plt.xlabel("Epoch #")
-		plt.ylabel("Loss/Accuracy")
+		plt.title("Training Loss & Accuracy")
+		plt.xlabel("Epoch number")
+		plt.ylabel("Loss/Acc")
 		plt.legend(loc="center right")
 		plt.savefig(plot)
 		plt.show()

@@ -245,3 +245,111 @@ weighted avg       0.74      0.64      0.57       207
  [ 72  19]]
 
 
+build: 1598787286.8117504 56.0386%
+model: Full_Net, epochs: 1, optimzer: Adam4, augmentation: original,
+image size: 48, batch size: 42, kernel size: 3, dataset size: 1035, run time: 19.98s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       0.56      1.00      0.72       116
+without_mask       0.00      0.00      0.00        91
+
+    accuracy                           0.56       207
+   macro avg       0.28      0.50      0.36       207
+weighted avg       0.31      0.56      0.40       207
+
+[[116   0]
+ [ 91   0]]
+
+
+build: 1598787341.5823472 56.0386%
+model: Quick_Net, epochs: 1, optimzer: Adam3, augmentation: original,
+image size: 48, batch size: 42, kernel size: 3, dataset size: 1035, run time: 14.91s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       0.56      1.00      0.72       116
+without_mask       0.00      0.00      0.00        91
+
+    accuracy                           0.56       207
+   macro avg       0.28      0.50      0.36       207
+weighted avg       0.31      0.56      0.40       207
+
+[[116   0]
+ [ 91   0]]
+
+
+build: 1598787400.2616606 97.5845%
+model: Quick_Net, epochs: 15, optimzer: Adam3, augmentation: original,
+image size: 48, batch size: 42, kernel size: 3, dataset size: 1035, run time: 154.69s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       1.00      0.96      0.98       116
+without_mask       0.95      1.00      0.97        91
+
+    accuracy                           0.98       207
+   macro avg       0.97      0.98      0.98       207
+weighted avg       0.98      0.98      0.98       207
+
+[[111   5]
+ [  0  91]]
+
+
+build: 1598787614.27919 96.1353%
+model: Quick_Net, epochs: 15, optimzer: SGD, augmentation: medium3,
+image size: 48, batch size: 42, kernel size: 3, dataset size: 1035, run time: 138.02s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       0.99      0.94      0.96       116
+without_mask       0.93      0.99      0.96        91
+
+    accuracy                           0.96       207
+   macro avg       0.96      0.96      0.96       207
+weighted avg       0.96      0.96      0.96       207
+
+[[109   7]
+ [  1  90]]
+
+
+build: 1598787797.3780332 97.1014%
+model: Quick_Net, epochs: 15, optimzer: Adam3, augmentation: original,
+image size: 48, batch size: 42, kernel size: 5, dataset size: 1035, run time: 252.58s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       1.00      0.95      0.97       116
+without_mask       0.94      1.00      0.97        91
+
+    accuracy                           0.97       207
+   macro avg       0.97      0.97      0.97       207
+weighted avg       0.97      0.97      0.97       207
+
+[[110   6]
+ [  0  91]]
+
+
+build: 1598788489.344021 95.1691%
+model: Quick_Net, epochs: 1, optimzer: Adam3, augmentation: original,
+image size: 48, batch size: 16, kernel size: 3, dataset size: 1035, run time: 17.60s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       1.00      0.91      0.95       116
+without_mask       0.90      1.00      0.95        91
+
+    accuracy                           0.95       207
+   macro avg       0.95      0.96      0.95       207
+weighted avg       0.96      0.95      0.95       207
+
+[[106  10]
+ [  0  91]]
+
+

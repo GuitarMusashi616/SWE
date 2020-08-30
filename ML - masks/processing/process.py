@@ -73,46 +73,52 @@ class Pprocess:
 
 
 	# Different options for augmentation pre-processing
+	# Too much augmentation is bad, so these are rolled back to small incremental changes
 	def data_aug(aug):
-		if aug == "original":
-			return ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
-            height_shift_range=0.1, shear_range=0.2, zoom_range=0.2,
+		wsr = 0.1
+		hsr = 0.1
+		if aug == "light1":
+			return ImageDataGenerator(rotation_range=15, width_shift_range=wsr,
+			height_shift_range=hsr, shear_range=0.1, zoom_range=0.1,
 			horizontal_flip=True, fill_mode="nearest")
-		elif aug == "light1":
-			return ImageDataGenerator(rotation_range=15, width_shift_range=0.1,
-			height_shift_range=0.1, shear_range=0.1, zoom_range=0.1,
-			horizontal_flip=True, fill_mode="nearest")
-		elif aug == "light2":
-			return ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
-			height_shift_range=0.1, shear_range=0.1, zoom_range=0.1,
+		if aug == "light2":
+			return ImageDataGenerator(rotation_range=15, width_shift_range=wsr,
+			height_shift_range=hsr, shear_range=0.1, zoom_range=0.1,
 			horizontal_flip=True, fill_mode="reflect")
-		elif aug == "light3":
-			return ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
-			height_shift_range=0.1, shear_range=0.2, zoom_range=0.2,
+		if aug == "light3":
+			return ImageDataGenerator(rotation_range=15, width_shift_range=wsr,
+			height_shift_range=hsr, shear_range=0.1, zoom_range=0.1,
 			horizontal_flip=True, fill_mode="wrap")
-		elif aug == "medium1":
-			return ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
-			height_shift_range=0.1, shear_range=0.2, zoom_range=0.2,
-			brightness_range=[1.0,1.5],	horizontal_flip=True, fill_mode="nearest")
-		elif aug == "medium2":
-			return ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
-			height_shift_range=0.1, shear_range=0.2, zoom_range=0.2,
-			brightness_range=[0.5,1.0],	horizontal_flip=True, fill_mode="nearest")
-		elif aug == "medium3":
-			return ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
-			height_shift_range=0.1, shear_range=0.2, zoom_range=0.2, horizontal_flip=True,
-			vertical_flip=True, fill_mode="nearest")
-		elif aug == "heavy1":
-			return ImageDataGenerator(rotation_range=45, width_shift_range=0.1,
-			height_shift_range=0.1, shear_range=0.2, zoom_range=1.2,
-			brightness_range=[1.0,1.0],	horizontal_flip=True, fill_mode="nearest")
-		elif aug == "heavy2":
-			return ImageDataGenerator(rotation_range=45, width_shift_range=0.1,
-			height_shift_range=0.1, shear_range=0.2, zoom_range=1.2,
-			brightness_range=[0.5,1.0],	horizontal_flip=True, fill_mode="nearest")
+
+		if aug == "medium1":
+			return ImageDataGenerator(rotation_range=30, width_shift_range=wsr,
+			height_shift_range=hsr, shear_range=0.2, zoom_range=0.2,
+			horizontal_flip=True, fill_mode="nearest")
+		if aug == "medium2":
+			return ImageDataGenerator(rotation_range=30, width_shift_range=wsr,
+			height_shift_range=hsr, shear_range=0.2, zoom_range=0.2,
+			horizontal_flip=True, fill_mode="reflect")
+		if aug == "medium3":
+			return ImageDataGenerator(rotation_range=30, width_shift_range=wsr,
+			height_shift_range=hsr, shear_range=0.2, zoom_range=0.2,
+			horizontal_flip=True, fill_mode="wrap")
+
+		if aug == "heavy1":
+			return ImageDataGenerator(rotation_range=45, width_shift_range=wsr,
+			height_shift_range=hsr, shear_range=0.2, zoom_range=0.3,
+			horizontal_flip=True, fill_mode="nearest")
+		if aug == "heavy2":
+			return ImageDataGenerator(rotation_range=45, width_shift_range=wsr,
+			height_shift_range=hsr, shear_range=0.2, zoom_range=0.3,
+			horizontal_flip=True, fill_mode="reflect")
+		if aug == "heavy3":
+			return ImageDataGenerator(rotation_range=45, width_shift_range=wsr,
+			height_shift_range=hsr, shear_range=0.2, zoom_range=0.3,
+			horizontal_flip=True, fill_mode="wrap")
+
 		else:
-			return ImageDataGenerator(rotation_range=15, width_shift_range=0.1,
-			height_shift_range=0.1, shear_range=0.2, zoom_range=0.2,
+			return ImageDataGenerator(rotation_range=30, width_shift_range=wsr,
+            height_shift_range=hsr, shear_range=0.2, zoom_range=0.2,
 			horizontal_flip=True, fill_mode="nearest")
 
 

@@ -37,26 +37,20 @@ class Tune:
 
     # Pre-set optimizers for learning rates
     def optimizer(opt, epochs):
-        if opt == "Adam":
-            return Adam(lr=0.001, decay=0.001/epochs)
-        elif opt == "Adam2":
-            return Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
-        elif opt == "Adam3":
-            return Adam(lr=0.001, beta_1=0.9, beta_2=0.999, amsgrad=True)
-        elif opt == "Adam4":
-            return Adam(lr=0.001, decay=0.001/epochs, amsgrad=True)
-        elif opt == "SGD":
-            return SGD(lr=0.1, decay=0.1, momentum=0.01, nesterov=True)
-        elif opt == "SGD2":
-            return SGD(lr=0.1, decay=0.1, momentum=0.05, nesterov=True)
-        elif opt == "SGD3":
-            return SGD(lr=0.1, decay=0.1, momentum=0.1, nesterov=True)
-        elif opt == "RMSprop":
-            return RMSprop(lr=0.001, rho=0.9)
-        elif opt == "Adadelta":
-            return Adadelta(lr=1.0, rho=0.9)
-        else:
+        optimizers = OrderedDict([
+	        ("SGD",  SGD(lr=0.1, decay=0.1, momentum=0.01, nesterov=True)),
+	        ("SGD2", SGD(lr=0.1, decay=0.1, momentum=0.05, nesterov=True)),
+	        ("SGD3", SGD(lr=0.1, decay=0.1, momentum=0.1, nesterov=True)),
+	        ("Adam",  Adam(lr=0.001, decay=0.001/epochs)),
+	        ("Adam2", Adam(lr=0.001, decay=0.001/epochs, amsgrad=True)),
+	        ("Adam3", Adam(lr=0.001, beta_1=0.9, beta_2=0.999)),
+	        ("Adam4", Adam(lr=0.001, beta_1=0.9, beta_2=0.999, amsgrad=True)),
+	        ("RMSprop",  RMSprop(lr=0.001, rho=0.9)),
+	        ("Adadelta", Adadelta(lr=1.0, rho=0.9)),
+        ])
+        if opt not in optimizers:
             return Adam(lr=0.001)
+        return optimizers[opt]
 
 
     # Pre-set batch sizes (*too large will crash)
@@ -100,9 +94,9 @@ class Tune:
         return 3
 
 
-    # Call to Keras fit_generator() library, placed here for cleaner code and encapsulation
+    # Call to Keras fit_generator() library
     def fit(model, aug, num_epochs, bs, train_X, train_Y, test_X, test_Y):
-        # Some of these are extra hyperparameters to modified
+        # Some of these are extra hyperparameters to modify
         H = model.fit_generator(
             aug.flow(train_X, train_Y, batch_size=bs),
             validation_data=(test_X, test_Y),
