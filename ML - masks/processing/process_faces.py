@@ -70,7 +70,7 @@ for (itr, img_path) in enumerate(img_paths):
 	image = cv2.imread(img_path)
 	(h, w) = image.shape[:2]
 
-	# detect faces in the image
+	# Detect faces in the image
 	imageBlob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 
 		1.0, (300, 300), (104.0, 177.0, 123.0), swapRB=False, crop=False)
 	detector.setInput(imageBlob)
