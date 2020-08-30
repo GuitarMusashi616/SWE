@@ -7,6 +7,7 @@
 # Pre-process the dataset for any model
 
 
+from sklearn.preprocessing import LabelBinarizer
 from keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.image import img_to_array
@@ -15,16 +16,20 @@ from imutils import paths
 import numpy as np
 import random
 import cv2
+import sys
 import os
 
 
 class Pprocess:
 
-	# load the input dataset and process
+	# Load the input dataset and process
 	def preprocess(dataset, HXW):
 		data = []
 		cl_labels = []
 		img_paths = sorted(list(paths.list_images(dataset)))
+		if len(img_paths) < 1:
+			print("Err: No images found in:", dataset)
+			sys.exit(1)
 		random.seed(64)
 		random.shuffle(img_paths)
 		for img_path in img_paths:
@@ -38,16 +43,36 @@ class Pprocess:
 		return data, cl_labels
 
 
-	# Using sklearn train test split, but with additional required processing for binary classification
-	def split(data, cl_labels, num_classes):
-		(train_X, test_X, train_Y, test_Y) = train_test_split(data, cl_labels, test_size=0.2, random_state=64)
+	# Processing required for the class labels to work
+	def class_labels(cl_labels):
+		lb = LabelBinarizer()
+		cl_labels = lb.fit_transform(cl_labels)
+		num_classes = len(lb.classes_)
+		return lb, cl_labels, num_classes
+
+
+	# Loss type depending on how many classes
+	def binary_or_categorical(num_classes):
+		if num_classes > 2:
+			return "categorical_crossentropy"
+		return "binary_crossentropy"
+
+
+	# Using sklearn train test split, but with additional processing required for binary classification
+	def split(data, cl_labels, num_classes, test_size=0.2):
+		cl_labels = np.array(cl_labels)
+		(train_X, test_X, train_Y, test_Y) = train_test_split(
+			data, cl_labels,
+			test_size=test_size,
+			random_state=64
+		)
 		if num_classes == 2:
 			train_Y = to_categorical(train_Y, num_classes=num_classes)
 			test_Y = to_categorical(test_Y, num_classes=num_classes)
 		return train_X, test_X, train_Y, test_Y
 
 
-	# different options for augmentation pre-processing
+	# Different options for augmentation pre-processing
 	def data_aug(aug):
 		if aug == "original":
 			return ImageDataGenerator(rotation_range=30, width_shift_range=0.1,

@@ -17,12 +17,20 @@ from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 from keras import metrics
 import numpy as np
+import pickle
 import time
 import matplotlib
 matplotlib.use("Agg")
 
 
 class Result:
+
+	# Save the model with classes after training
+	def save_model(model, filepath, lb):
+		model.save(filepath)
+		f = open("processing/lb.pickle", "wb")
+		f.write(pickle.dumps(lb))
+		f.close()
 
     # Print the classification report and confusion matrix
 	def display_metrix(test_X, test_Y, predictions, model, classes, aug, bs):
@@ -62,7 +70,6 @@ class Result:
 		plt.xlabel("Epoch #")
 		plt.ylabel("Loss/Accuracy")
 		plt.legend(loc="center right")
-		print("\n", plot, "\n")
 		plt.savefig(plot)
 		plt.show()
 

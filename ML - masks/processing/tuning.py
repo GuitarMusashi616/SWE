@@ -17,20 +17,33 @@ from keras.optimizers import Adadelta
 from keras.optimizers import RMSprop
 from keras.optimizers import Adam
 from keras.optimizers import SGD
+from nets.net import Quick_Net
+from nets.net import Full_Net
 from collections import OrderedDict
 
 
 class Tune:
 
+    # Choose among the neural net implementations
+    def build_model(mod, HXW, channels, kernel, num_classes):
+        models = [
+            "Quick_Net",
+            "Full_Net"
+        ]
+        if mod == models[1]:
+            return Full_Net.build(width=HXW, height=HXW, depth=channels, kernel=kernel, classes=num_classes)
+        return Quick_Net.build(width=HXW, height=HXW, depth=channels, kernel=kernel, classes=num_classes)
+
+
     # Pre-set optimizers for learning rates
     def optimizer(opt, epochs):
         if opt == "Adam":
             return Adam(lr=0.001, decay=0.001/epochs)
-        if opt == "Adam2":
+        elif opt == "Adam2":
             return Adam(lr=0.001, beta_1=0.9, beta_2=0.999)
-        if opt == "Adam3":
+        elif opt == "Adam3":
             return Adam(lr=0.001, beta_1=0.9, beta_2=0.999, amsgrad=True)
-        if opt == "Adam4":
+        elif opt == "Adam4":
             return Adam(lr=0.001, decay=0.001/epochs, amsgrad=True)
         elif opt == "SGD":
             return SGD(lr=0.1, decay=0.1, momentum=0.01, nesterov=True)
@@ -83,8 +96,30 @@ class Tune:
     # Pre-set kernel sizes, really only error checking, don't want anything else than 3 or 5
     def kernel(size):
         if size == 5:
-            return size
+            return 5
         return 3
+
+
+    # Call to Keras fit_generator() library, placed here for cleaner code and encapsulation
+    def fit(model, aug, num_epochs, bs, train_X, train_Y, test_X, test_Y):
+        # Some of these are extra hyperparameters to modified
+        H = model.fit_generator(
+            aug.flow(train_X, train_Y, batch_size=bs),
+            validation_data=(test_X, test_Y),
+            steps_per_epoch=len(train_X) // bs,
+            epochs=num_epochs,
+            class_weight=[1.0,1.0],
+            shuffle=False,
+            verbose=2
+        )
+        return H
+
+
+    # Really just an error check for valid range of epochs
+    def epoch(epochs):
+        if epochs >= 1 and epochs <= 200:
+            return epochs
+        return 1
 
 
     # Customized learning rates, not currently supported
