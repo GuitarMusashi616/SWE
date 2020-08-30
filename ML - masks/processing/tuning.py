@@ -24,7 +24,7 @@ from collections import OrderedDict
 
 class Tune:
 
-    # Choose among the neural net implementations
+    # Choose among the neural net implementations and built it
     def build_model(mod, HXW, channels, kernel, num_classes):
         models = [
             "Quick_Net",
@@ -49,7 +49,7 @@ class Tune:
 	        ("Adadelta", Adadelta(lr=1.0, rho=0.9)),
         ])
         if opt not in optimizers:
-            return Adam(lr=0.001)
+            return optimizers["Adam"]
         return optimizers[opt]
 
 
@@ -65,10 +65,12 @@ class Tune:
         ])
         # Error checking, return default or a custom size
         if size not in batch_sizes:
+            try:
+                size = int(size)
+            except:
+                return batch_sizes["ms"]
             if isinstance(size, int) and size >= 8 and size <= 512:
                 return int(size)
-            else:
-                return batch_sizes[ms]
         return batch_sizes[size]
 
 
@@ -83,7 +85,7 @@ class Tune:
         ])
         # Error checking, return default
         if size not in img_sizes:
-            return img_sizes[s]
+            return img_sizes["s"]
         return img_sizes[size]
 
 

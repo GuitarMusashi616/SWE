@@ -353,3 +353,129 @@ weighted avg       0.96      0.95      0.95       207
  [  0  91]]
 
 
+build: 1598789226.0316656 58.4541%
+model: Quick_Net, epochs: 1, optimzer: Adam3, augmentation: original,
+image size: 48, batch size: 32, kernel size: 3, dataset size: 1035, run time: 15.10s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       0.58      0.98      0.73       116
+without_mask       0.78      0.08      0.14        91
+
+    accuracy                           0.58       207
+   macro avg       0.68      0.53      0.43       207
+weighted avg       0.66      0.58      0.47       207
+
+[[114   2]
+ [ 84   7]]
+
+
+build: 1598789353.6563249 85.9903%
+model: Quick_Net, epochs: 1, optimzer: Adam3, augmentation: original,
+image size: 48, batch size: 32, kernel size: 3, dataset size: 1035, run time: 16.80s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       0.81      0.97      0.89       116
+without_mask       0.96      0.71      0.82        91
+
+    accuracy                           0.86       207
+   macro avg       0.88      0.84      0.85       207
+weighted avg       0.88      0.86      0.86       207
+
+[[113   3]
+ [ 26  65]]
+
+
+build: 1598789443.7505593 56.0386%
+model: Quick_Net, epochs: 1, optimzer: Adam3, augmentation: original,
+image size: 48, batch size: 8, kernel size: 3, dataset size: 1035, run time: 24.33s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       0.56      1.00      0.72       116
+without_mask       0.00      0.00      0.00        91
+
+    accuracy                           0.56       207
+   macro avg       0.28      0.50      0.36       207
+weighted avg       0.31      0.56      0.40       207
+
+[[116   0]
+ [ 91   0]]
+
+
+build: 1598789486.6706014 95.6522%
+model: Quick_Net, epochs: 1, optimzer: Adam3, augmentation: original,
+image size: 48, batch size: 8, kernel size: 3, dataset size: 1035, run time: 23.55s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       0.99      0.93      0.96       116
+without_mask       0.92      0.99      0.95        91
+
+    accuracy                           0.96       207
+   macro avg       0.95      0.96      0.96       207
+weighted avg       0.96      0.96      0.96       207
+
+[[108   8]
+ [  1  90]]
+
+
+build: 1598789519.0157042 84.5411%
+model: Quick_Net, epochs: 1, optimzer: Adam3, augmentation: original,
+image size: 48, batch size: 32, kernel size: 3, dataset size: 1035, run time: 15.06s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       0.81      0.95      0.87       116
+without_mask       0.92      0.71      0.80        91
+
+    accuracy                           0.85       207
+   macro avg       0.86      0.83      0.84       207
+weighted avg       0.86      0.85      0.84       207
+
+[[110   6]
+ [ 26  65]]
+
+
+build: 1598789620.6163993 56.0386%
+model: Full_Net, epochs: 1, optimzer: Adam3, augmentation: original,
+image size: 48, batch size: 32, kernel size: 3, dataset size: 1035, run time: 19.43s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       0.56      1.00      0.72       116
+without_mask       0.00      0.00      0.00        91
+
+    accuracy                           0.56       207
+   macro avg       0.28      0.50      0.36       207
+weighted avg       0.31      0.56      0.40       207
+
+[[116   0]
+ [ 91   0]]
+
+
+build: 1598789684.590245 97.1014%
+model: Full_Net, epochs: 15, optimzer: Adam3, augmentation: original,
+image size: 48, batch size: 8, kernel size: 3, dataset size: 1035, run time: 263.99s
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       1.00      0.95      0.97       116
+without_mask       0.94      1.00      0.97        91
+
+    accuracy                           0.97       207
+   macro avg       0.97      0.97      0.97       207
+weighted avg       0.97      0.97      0.97       207
+
+[[110   6]
+ [  0  91]]
+
+
