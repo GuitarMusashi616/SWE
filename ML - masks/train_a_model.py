@@ -26,13 +26,13 @@ ap.add_argument("-s", "--savemodel", type=str, default="processing/model.model")
 ap.add_argument("-p", "--plot", type=str, default="processing/plots/plot.png")
 ap.add_argument("-d", "--dataset", type=str, default="processed_dataset")
 ap.add_argument("-m", "--model", type=str, default="Quick_Net")
-ap.add_argument("-a", "--aug", type=str, default="original")
-ap.add_argument("-b", "--batch_size", type=str, default="m")
+ap.add_argument("-a", "--aug", type=str, default="default")
+ap.add_argument("-b", "--batch_size", type=int, default=32)
 ap.add_argument("-n", "--notes", type=str, default="(none)")
 ap.add_argument("-e", "--num_epochs", type=int, default=50)
 ap.add_argument("-k", "--kernelsize", type=int, default=3)
 ap.add_argument("-o", "--opt", type=str, default="Adam3")
-ap.add_argument("-i", "--imgsz", type=str, default="m")
+ap.add_argument("-i", "--imgsz", type=int, default=48)
 args = vars(ap.parse_args())
 
 batch_size = Tune.batch_size(args["batch_size"])
@@ -61,9 +61,9 @@ Result.save_model(model, args["savemodel"], lb)
 
 print("\n...getting results of training & testing...\n")
 predictions = model.predict(test_X, batch_size=batch_size)
-Result.save_info(start_time, Result.acc_score(test_Y, predictions), args["model"], num_epochs, args["opt"], args["aug"], HXW, batch_size, kernel, len(data), notes)
+Result.save_info(start_time, Result.acc_score(test_Y, predictions), args["model"], num_epochs, args["opt"], args["aug"], HXW, batch_size, kernel, len(data), args["plot"], notes)
 Result.display_metrix(test_X, test_Y, predictions, model, lb.classes_, aug, batch_size)
-Result.display_plot((args["plot"]), num_epochs, hist_obj)
+Result.display_plot(args["plot"], num_epochs, hist_obj)
 
 
 

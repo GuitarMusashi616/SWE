@@ -86,9 +86,9 @@ class Result:
 
 
 	# Save the build info and parameters to the file
-	def save_info(start_time, acc, model, epochs, opt, aug, imgsz, bs, k, datasize, notes):
+	def save_info(start_time, acc, model, epochs, opt, aug, imgsz, bs, k, datasize, plot, notes):
 		run_time = time.time() - start_time
-		label = "build: {} {:.6}%\nmodel: {}, epochs: {}, optimzer: {}, augmentation: {},\nimage size: {}, batch size: {}, kernel size: {}, dataset size: {}, run time: {:.2f}s\nnotes: {} \n".format(start_time, acc*100, model, epochs, opt, aug, imgsz, bs, k, datasize, run_time, notes)
+		label = "build: {} {:.6}%\nmodel: {}, epochs: {}, optimzer: {}, augmentation: {},\nimage size: {}, batch size: {}, kernel size: {}, dataset size: {}, run time: {:.2f}s\n{}\nnotes: {} \n".format(start_time, acc*100, model, epochs, opt, aug, imgsz, bs, k, datasize, run_time, plot, notes)
 		f = open("processing/performance.txt","a+")
 		f.write(label)
 		f.write("\n")

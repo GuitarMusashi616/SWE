@@ -73,53 +73,53 @@ class Pprocess:
 
 
 	# Different options for augmentation pre-processing
-	# Too much augmentation is bad, so these are rolled back to small incremental changes
+	# Too much is bad, so these are rolled back to small incremental changes
 	def data_aug(aug):
 		wsr = 0.1
 		hsr = 0.1
 		if aug == "light1":
-			return ImageDataGenerator(rotation_range=15, width_shift_range=wsr,
-			height_shift_range=hsr, shear_range=0.1, zoom_range=0.1,
-			horizontal_flip=True, fill_mode="nearest")
+			return ImageDataGenerator(horizontal_flip=True, fill_mode="nearest",
+            rotation_range=15, shear_range=0.1, zoom_range=0.1,
+            width_shift_range=wsr, height_shift_range=hsr)
 		if aug == "light2":
-			return ImageDataGenerator(rotation_range=15, width_shift_range=wsr,
-			height_shift_range=hsr, shear_range=0.1, zoom_range=0.1,
-			horizontal_flip=True, fill_mode="reflect")
+			return ImageDataGenerator(horizontal_flip=True, fill_mode="reflect",
+            rotation_range=15, shear_range=0.1, zoom_range=0.1,
+            width_shift_range=wsr, height_shift_range=hsr)
 		if aug == "light3":
-			return ImageDataGenerator(rotation_range=15, width_shift_range=wsr,
-			height_shift_range=hsr, shear_range=0.1, zoom_range=0.1,
-			horizontal_flip=True, fill_mode="wrap")
+			return ImageDataGenerator(horizontal_flip=True, fill_mode="wrap",
+            rotation_range=15, shear_range=0.1, zoom_range=0.1,
+            width_shift_range=wsr, height_shift_range=hsr)
 
 		if aug == "medium1":
-			return ImageDataGenerator(rotation_range=30, width_shift_range=wsr,
-			height_shift_range=hsr, shear_range=0.2, zoom_range=0.2,
-			horizontal_flip=True, fill_mode="nearest")
+			return ImageDataGenerator(horizontal_flip=True, fill_mode="nearest",
+            rotation_range=30, shear_range=0.2, zoom_range=0.2,
+            width_shift_range=wsr, height_shift_range=hsr)
 		if aug == "medium2":
-			return ImageDataGenerator(rotation_range=30, width_shift_range=wsr,
-			height_shift_range=hsr, shear_range=0.2, zoom_range=0.2,
-			horizontal_flip=True, fill_mode="reflect")
+			return ImageDataGenerator(horizontal_flip=True, fill_mode="reflect",
+            rotation_range=30, shear_range=0.2, zoom_range=0.2,
+            width_shift_range=wsr, height_shift_range=hsr)
 		if aug == "medium3":
-			return ImageDataGenerator(rotation_range=30, width_shift_range=wsr,
-			height_shift_range=hsr, shear_range=0.2, zoom_range=0.2,
-			horizontal_flip=True, fill_mode="wrap")
+			return ImageDataGenerator(horizontal_flip=True, fill_mode="wrap",
+            rotation_range=30, shear_range=0.2, zoom_range=0.2,
+            width_shift_range=wsr, height_shift_range=hsr)
 
 		if aug == "heavy1":
-			return ImageDataGenerator(rotation_range=45, width_shift_range=wsr,
-			height_shift_range=hsr, shear_range=0.2, zoom_range=0.3,
-			horizontal_flip=True, fill_mode="nearest")
+			return ImageDataGenerator(horizontal_flip=True, fill_mode="reflect",
+            rotation_range=45, shear_range=0.2, zoom_range=0.3,
+            width_shift_range=wsr, height_shift_range=hsr)
 		if aug == "heavy2":
-			return ImageDataGenerator(rotation_range=45, width_shift_range=wsr,
-			height_shift_range=hsr, shear_range=0.2, zoom_range=0.3,
-			horizontal_flip=True, fill_mode="reflect")
+			return ImageDataGenerator(horizontal_flip=True, fill_mode="nearest",
+            rotation_range=45, shear_range=0.2, zoom_range=0.3,
+            width_shift_range=wsr, height_shift_range=hsr)
 		if aug == "heavy3":
-			return ImageDataGenerator(rotation_range=45, width_shift_range=wsr,
-			height_shift_range=hsr, shear_range=0.2, zoom_range=0.3,
-			horizontal_flip=True, fill_mode="wrap")
+			return ImageDataGenerator(horizontal_flip=True, fill_mode="wrap",
+            rotation_range=45, shear_range=0.2, zoom_range=0.3,
+            width_shift_range=wsr, height_shift_range=hsr)
 
 		else:
-			return ImageDataGenerator(rotation_range=30, width_shift_range=wsr,
-            height_shift_range=hsr, shear_range=0.2, zoom_range=0.2,
-			horizontal_flip=True, fill_mode="nearest")
+			return ImageDataGenerator(horizontal_flip=True, fill_mode="nearest",
+            rotation_range=30, shear_range=0.2, zoom_range=0.2,
+            width_shift_range=wsr, height_shift_range=hsr)
 
 
 
