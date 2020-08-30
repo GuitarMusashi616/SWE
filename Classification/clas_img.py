@@ -19,7 +19,6 @@
 from keras.preprocessing.image import img_to_array
 from keras.models import load_model
 from imutils import paths
-import face_recognition
 import numpy as np
 import argparse
 import imutils
@@ -37,24 +36,37 @@ ap.add_argument("-d", "--dir", required=False)
 args = vars(ap.parse_args())
 
 if not args["image"] and not args["dir"]:
-	sys.exit(1)
+    print("Err, no inputs loaded")
+    sys.exit(1)
 if args["dir"]:
     dataset = args["dir"]
 if args["image"]:
     dataset = args["image"]
-detection = "hog"
-detection = "cnn"
+img_paths = sorted(list(paths.list_images(dataset)))
+if len(img_paths) < 1:
+    print("Err, no inputs found")
+    sys.exit(1)
+
+# First implementation face detection stuff
 proto = "../ML - masks/face_detector/deploy.prototxt"
 model = "../ML - masks/face_detector/res10_300x300_ssd_iter_140000.caffemodel"
 detector = cv2.dnn.readNetFromCaffe(proto, model)
 threshold = 0.7
-HXW = (args["size"])
+
+# Second implementation face detection stuff
+import face_recognition
+detection = "hog"
+#detection = "cnn" # Too slow, gets killed
+
+# My trained model for making predictions
 model = load_model(args["model"])
 lb = pickle.loads(open(args["labelbin"], "rb").read())
-img_paths = sorted(list(paths.list_images(dataset)))
+HXW = (args["size"])
 
+# dbug stuff
 dbug_imshow = False
 clas_imshow = False
+clas_imshow_fr = True
 dbug_print = True
 dbug_total_faces = 0
 dbug_total_faces_fr = 0
@@ -68,6 +80,9 @@ for img_path in img_paths:
     if dbug_print:
         print("Processing:", img_path)
 
+    # First implementation, process just like for training
+
+    '''
     # Detect faces in the image
     blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0), swapRB=False, crop=False)
     detector.setInput(blob)
@@ -122,16 +137,24 @@ for img_path in img_paths:
     if clas_imshow:
         cv2.imshow(img_path, img)
         cv2.waitKey(500)
+    '''
 
-    '''rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    # Todo: second implementation, a different kinda face detection
+    # Need something a little more accuracte
+
+    rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    # Detect faces in the images and get their locations
     boxes = face_recognition.face_locations(rgb, model=detection)
     for (top, right, bottom, left) in boxes:
-        cv2.rectangle(img, (left, top), (right, bottom), (0, 255, 0), 2)
+        if dbug_print:
+            print("  Detected face")
+        cv2.rectangle(img, (left, top), (right, bottom), (0, 255, 255), 2)
         y = top - 15 if top - 15 > 15 else top + 15
         #cv2.putText(img, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 0), 2)
         dbug_total_faces_fr += 1
-    cv2.imshow(img_path, img)
-    cv2.waitKey(500)'''
+    if clas_imshow_fr:
+        cv2.imshow(img_path, img)
+        cv2.waitKey(500)
 
 
 
