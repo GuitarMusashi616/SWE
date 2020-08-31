@@ -62,7 +62,7 @@ Result.save_model(model, args["savemodel"], lb)
 print("\n...getting results of training & testing...\n")
 predictions = model.predict(test_X, batch_size=batch_size)
 Result.save_info(start_time, Result.acc_score(test_Y, predictions), args["model"], num_epochs, args["opt"], args["aug"], HXW, batch_size, kernel, len(data), args["plot"], notes)
-Result.display_metrix(test_X, test_Y, predictions, model, lb.classes_, aug, batch_size)
+Result.display_metrix(test_X, test_Y, predictions, model, lb.classes_, aug)
 Result.display_plot(args["plot"], num_epochs, hist_obj)
 
 

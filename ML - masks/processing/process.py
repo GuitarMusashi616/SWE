@@ -40,6 +40,9 @@ class Pprocess:
 			label = img_path.split(os.path.sep)[-2]
 			cl_labels.append(label)
 		data = np.array(data, dtype="float") / 255.0
+		if len(data) != len(cl_labels):
+			print("Err: Data not correctly labeled with classes")
+			sys.exit(1)
 		return data, cl_labels
 
 
@@ -48,6 +51,9 @@ class Pprocess:
 		lb = LabelBinarizer()
 		cl_labels = lb.fit_transform(cl_labels)
 		num_classes = len(lb.classes_)
+		if num_classes < 2:
+			print("Err: Not enough classes")
+			sys.exit(1)
 		return lb, cl_labels, num_classes
 
 
@@ -58,7 +64,7 @@ class Pprocess:
 		return "binary_crossentropy"
 
 
-	# Using sklearn train test split, but with additional processing required for binary classification
+	# sklearn train test split, with extra processing for binary classification
 	def split(data, cl_labels, num_classes, test_size=0.2):
 		cl_labels = np.array(cl_labels)
 		(train_X, test_X, train_Y, test_Y) = train_test_split(
