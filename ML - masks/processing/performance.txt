@@ -1175,3 +1175,22 @@ weighted avg       0.96      0.96      0.96       207
  [  0  91]]
 
 
+build: 1598877849.757144 99.0338%
+model: Full_Net, epochs: 40, optimzer: Adam3, augmentation: default
+image size: 32, batch size: 32, kernel size: 3, dataset size: 1035
+run time: 373.53s, processing/plots/plot.png
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       1.00      0.98      0.99       116
+without_mask       0.98      1.00      0.99        91
+
+    accuracy                           0.99       207
+   macro avg       0.99      0.99      0.99       207
+weighted avg       0.99      0.99      0.99       207
+
+[[114   2]
+ [  0  91]]
+
+

@@ -27,6 +27,7 @@ import cv2
 import sys
 import os
 
+
 ap = argparse.ArgumentParser()
 ap.add_argument("-m", "--model", default="../ML - masks/processing/model.model")
 ap.add_argument("-l", "--labelbin", default="../ML - masks/processing/lb.pickle")
@@ -51,7 +52,7 @@ if len(img_paths) < 1:
 proto = "../ML - masks/face_detector/deploy.prototxt"
 model = "../ML - masks/face_detector/res10_300x300_ssd_iter_140000.caffemodel"
 detector = cv2.dnn.readNetFromCaffe(proto, model)
-threshold = 0.7
+threshold = 0.6
 
 # Second implementation face detection stuff
 import face_recognition
@@ -65,7 +66,7 @@ HXW = (args["size"])
 
 # dbug stuff
 dbug_imshow = False
-clas_imshow = False
+clas_imshow = True
 clas_imshow_fr = True
 dbug_print = True
 dbug_total_faces = 0
@@ -80,9 +81,12 @@ for img_path in img_paths:
     if dbug_print:
         print("Processing:", img_path)
 
-    # First implementation, process just like for training
+
+
 
     '''
+    # First implementation, process just like for training
+
     # Detect faces in the image
     blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (104.0, 177.0, 123.0), swapRB=False, crop=False)
     detector.setInput(blob)
@@ -128,7 +132,7 @@ for img_path in img_paths:
             label = "{}: {:.2f}%".format(prediction, prob[idx] * 100)
             loc = start_y - 10 if start_y - 10 > 10 else start_y + 10
             cv2.rectangle(img, (start_x, start_y), (endX, endY), color, 2)
-            cv2.putText(img, label, (start_x, loc), cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
+            cv2.putText(img, label, (start_x, loc), cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 1)
             if dbug_print:
                 print("  Detected face: {:.2f}%".format(probability * 100))
                 print("    ", label)
@@ -137,7 +141,14 @@ for img_path in img_paths:
     if clas_imshow:
         cv2.imshow(img_path, img)
         cv2.waitKey(500)
+
+
     '''
+
+
+
+
+
 
     # Todo: second implementation, a different kinda face detection
     # Need something a little more accuracte
@@ -155,6 +166,9 @@ for img_path in img_paths:
     if clas_imshow_fr:
         cv2.imshow(img_path, img)
         cv2.waitKey(500)
+
+
+
 
 
 
