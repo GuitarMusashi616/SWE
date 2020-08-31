@@ -29,8 +29,9 @@ import os
 
 
 ap = argparse.ArgumentParser()
-ap.add_argument("-m", "--model", default="../ML - masks/processing/model.model")
-ap.add_argument("-l", "--labelbin", default="../ML - masks/processing/lb.pickle")
+ap.add_argument("-m", "--model", default="../ML - masks/processing/model_1.model")
+ap.add_argument("-l", "--labelbin", default="../ML - masks/processing/lb_1.pickle")
+ap.add_argument("-r", "--req", default="../ML - masks/processing/model_1_hxw_req.txt")
 ap.add_argument("-s", "--size", type=int, default="48")
 ap.add_argument("-i", "--image", required=False)
 ap.add_argument("-d", "--dir", required=False)
@@ -54,19 +55,22 @@ model = "../ML - masks/face_detector/res10_300x300_ssd_iter_140000.caffemodel"
 detector = cv2.dnn.readNetFromCaffe(proto, model)
 threshold = 0.6
 
-# Second implementation face detection stuff
-import face_recognition
-detection = "hog"
-#detection = "cnn" # Too slow, gets killed
-
 # My trained model for making predictions
 model = load_model(args["model"])
 lb = pickle.loads(open(args["labelbin"], "rb").read())
 HXW = (args["size"])
+# This Keras error is not clear until you've seen it a hundred times
+f = open(args["req"], 'r')
+required_HXW = f.readline()
+required_HXW = int(required_HXW)
+if HXW != required_HXW:
+    print("Err: This model was trained with {}x{} image size".format(required_HXW, required_HXW))
+    print("{}x{} size was input - run again with arg -i {}".format(HXW, HXW, required_HXW))
+    sys.exit(1)
 
 # dbug stuff
 dbug_imshow = False
-clas_imshow = True
+clas_imshow = False
 clas_imshow_fr = True
 dbug_print = True
 dbug_total_faces = 0
@@ -81,10 +85,7 @@ for img_path in img_paths:
     if dbug_print:
         print("Processing:", img_path)
 
-
-
-
-    '''
+    #'''
     # First implementation, process just like for training
 
     # Detect faces in the image
@@ -99,10 +100,10 @@ for img_path in img_paths:
             box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
             (start_x, start_y, endX, endY) = box.astype("int")
             # FYI this is a necessary resize so that cv2.resize() doesn't fail
-            if start_y - 32 > 0:
-                start_y -= 32
-            if start_x - 32 > 0:
-                start_x -= 32
+            #if start_y - 32 > 0:
+                #start_y -= 32
+            ##if start_x - 32 > 0:
+                #start_x -= 32
             # Extract the face image from the original image
             face = img[start_y:endY+32, start_x:endX+32]
             (fH, fW) = face.shape[:2]
@@ -142,16 +143,20 @@ for img_path in img_paths:
         cv2.imshow(img_path, img)
         cv2.waitKey(500)
 
+    # End first implementation
+    #'''
+
+
 
     '''
-
-
-
-
-
-
-    # Todo: second implementation, a different kinda face detection
+    # Second implementation, a different kinda face detection
     # Need something a little more accuracte
+    # This face detection model is not any better for low quality video frames
+
+    # Second implementation face detection stuff
+    import face_recognition
+    detection = "hog"
+    #detection = "cnn" # Too slow
 
     rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     # Detect faces in the images and get their locations
@@ -167,15 +172,14 @@ for img_path in img_paths:
         cv2.imshow(img_path, img)
         cv2.waitKey(500)
 
-
-
-
+    # End second implementation
+    '''
 
 
 
 if dbug_print:
-    print("dbug_total_faces:", dbug_total_faces)
-    print("dbug_total_faces_fr:", dbug_total_faces_fr)
+    print("dbug first implementation total faces detected:", dbug_total_faces)
+    print("dbug second implementation total faces detected::", dbug_total_faces_fr)
 
 
 

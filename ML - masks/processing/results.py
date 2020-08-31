@@ -26,10 +26,13 @@ matplotlib.use("Agg")
 class Result:
 
 	# Save the model with classes after training
-	def save_model(model, filepath, lb):
+	def save_model(model, filepath, lb, HXW):
 		model.save(filepath)
 		f = open("processing/lb.pickle", "wb")
 		f.write(pickle.dumps(lb))
+		f.close()
+		f = open("processing/model_hxw_req.txt")
+		f.write(HXW)
 		f.close()
 
 

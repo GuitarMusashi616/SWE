@@ -57,7 +57,7 @@ model.compile(loss=loss_type, optimizer=opt, metrics=["accuracy"])
 
 print("\n...training the model...\n")
 hist_obj = Tune.fit(model, aug, num_epochs, batch_size, train_X, train_Y, test_X, test_Y)
-Result.save_model(model, args["savemodel"], lb)
+Result.save_model(model, args["savemodel"], lb, HXW)
 
 print("\n...getting results of training & testing...\n")
 predictions = model.predict(test_X, batch_size=batch_size)
