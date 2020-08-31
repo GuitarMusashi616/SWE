@@ -71,7 +71,7 @@ class Tune:
         return 32
 
 
-    # Pre-set kernel sizes, really only error checking, don't want anything else than 3 or 5
+    # Pre-set kernel sizes, don't want anything else than 3 or 5
     def kernel(size):
         kernels = [
             3, 5
@@ -81,7 +81,7 @@ class Tune:
         return 3
 
 
-    # Really just an error check for valid range of epochs
+    # A valid range of epochs
     def epoch(epochs):
         if epochs >= 1 and epochs <= 200:
             return epochs

@@ -8,8 +8,8 @@
 # Generate hashes for each image to find duplcate hashes
 # Important for ML projects because duplicates can cause bias
 #
-# python3 remove_duplicates.py -d ../original_dataset/mask
-# python3 remove_duplicates.py -d ../original_dataset/without_mask
+# python3 remove_duplicates.py -d ../original_dataset/mask -r tru
+# python3 remove_duplicates.py -d ../original_dataset/without_mask -r true
 #
 # optional arg -s to display the duplicates for assurance
 # optional arg -r to actually remove duplicates for safety
@@ -17,7 +17,7 @@
 # This is only set up to process one directory at a time
 # Use preprocess.sh to easily run it on all the directories you need
 #
-# Note: I made it so that while the duplicates are being displayed,
+# Note: I made it so that while a duplicate is being displayed,
 # you have like 3 seconds to press the "s" key to pass deleting it
 
 
@@ -36,14 +36,13 @@ args = vars(ap.parse_args())
 hash_size = 8
 
 img_paths = list(paths.list_images(args["dataset"]))
-# Err check that the directory was not empty
 if len(img_paths) < 1:
 	print("Err: The directory", args["dataset"] + str(len(img_paths)) , "was empty")
 	sys.exit(1)
-hashes = {} # dictionary of hashes of the images
+hashes = {} # dictionary of hashes of all images
 total_duplicates = 0
 
-# Part one, loop through the input images and generate their hashes
+# Part one, loop through the input images and get their hashes
 print("Generating hashes...")
 for img_path in img_paths:
 	img = cv2.imread(img_path)
@@ -75,9 +74,9 @@ for (img_hash, hashed_paths) in hashes.items():
 				else:
 					montage = np.hstack([montage, image])
 			cv2.imshow("Duplicates", montage)
-			# You have waitKay(1200) much time to press "s" key to pass deleting ;)
+			# You have waitKay(1200) much time to press "s" key to pass deleting
 			if cv2.waitKey(1200) == ord("s"):
-				print("Duplicate image", path, "was NOT deleted")
+				print("Duplicate image", path, "was not deleted")
 				continue
 		# Remove the duplicates
 		if args["remove"]:
@@ -85,6 +84,10 @@ for (img_hash, hashed_paths) in hashes.items():
 				os.remove(path)
 				total_duplicates += 1
 				print("Deleted duplicate image:", path)
+            # End remove all duplicates of this one image
+        # End if removing
+    # End if there are duplicates of this one image
+# End loop thru hashes
 
 print(total_duplicates, "duplicates were removed")
 

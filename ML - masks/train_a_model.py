@@ -9,8 +9,8 @@
 # $ source ./venv1/bin/activate
 # $ python3 -W ignore train_a_model.py
 #
-# This file pre-processes an input dataset with selected parameters
-# Trains a selected model with selected parameters and tunings and saves it
+# This pre-processes an input dataset with selected tunings
+# Trains a selected model with selected tunungs and saves it
 # Outputs results and metrics including a plot and saves them with the build info
 
 
@@ -30,15 +30,15 @@ ap.add_argument("-a", "--aug", type=str, default="default")
 ap.add_argument("-b", "--batch_size", type=int, default=32)
 ap.add_argument("-n", "--notes", type=str, default="(none)")
 ap.add_argument("-e", "--num_epochs", type=int, default=50)
-ap.add_argument("-k", "--kernelsize", type=int, default=3)
+ap.add_argument("-k", "--kernel_size", type=int, default=3)
 ap.add_argument("-o", "--opt", type=str, default="Adam3")
-ap.add_argument("-i", "--imgsz", type=int, default=48)
+ap.add_argument("-i", "--img_size", type=int, default=48)
 args = vars(ap.parse_args())
 
 batch_size = Tune.batch_size(args["batch_size"])
 num_epochs = Tune.epoch(args["num_epochs"])
-kernel = Tune.kernel(args["kernelsize"])
-HXW = Tune.img_size(args["imgsz"])
+kernel = Tune.kernel(args["kernel_size"])
+HXW = Tune.img_size(args["img_size"])
 notes = args["notes"]
 channels = 3
 start_time = time.time()

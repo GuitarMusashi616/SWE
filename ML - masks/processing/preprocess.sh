@@ -8,6 +8,7 @@
 #
 # All in one pre-processing, the script will do some file renaming processing
 # And then continue by running the other python files that do the rest of pre-processing
+# So you can run them all at once the way they are intended to run, see below
 #
 # This is a good pre-processing step to rename all files, get rid of weird internet filenames
 # It helps in later processing steps when you need to find and manually process some images
@@ -16,9 +17,6 @@
 # Need to be very careful about renaming programmatically or you will accidentally delete lots of files
 # This has been error checked fairly well so that bad things don't happen
 # But still it is good to backup your datasets before running anything like this
-#
-# Additionally afterwords this script can call the other python pre-processing scripts
-# So you can run them all at once the way they are intended to run, see below
 #
 # You should manually rename any file that starts with "-" because commands don't like seeing that
 
@@ -107,6 +105,9 @@ do
 done
 
 cd ../processing
+
+# These are the next steps of pre-processing
+# Run everything from here to ensure consistency
 
 # Run the duplicate removing script
 printf "Removing duplicates...\n\n"
