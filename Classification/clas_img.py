@@ -29,9 +29,9 @@ import os
 
 
 ap = argparse.ArgumentParser()
-ap.add_argument("-m", "--model", default="../ML - masks/models/model.model")
-ap.add_argument("-l", "--labelbin", default="../ML - masks/models/lb.pickle")
-ap.add_argument("-r", "--req", default="../ML - masks/models/model_hxw_req.txt")
+ap.add_argument("-m", "--model", default="../ML - masks/models/model_0.model")
+ap.add_argument("-l", "--labelbin", default="../ML - masks/models/lb_0.pickle")
+ap.add_argument("-r", "--req", default="../ML - masks/models/model_0_hxw_req.txt")
 ap.add_argument("-i", "--img_size", type=int, default="32")
 ap.add_argument("-s", "--single_image", required=False)
 ap.add_argument("-d", "--dir", required=False)
