@@ -46,8 +46,9 @@ import os
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", required=True)
-ap.add_argument("-p", "--originals_dir", default="../original_dataset/")
-ap.add_argument("-o", "--one", type=bool, default=False)
+ap.add_argument("-o", "--originals_dir", default="../data/original_dataset/")
+ap.add_argument("-p", "--processed_dir", default="../data/processed_dataset/")
+ap.add_argument("-n", "--one", type=bool, default=False)
 args = vars(ap.parse_args())
 
 # Face detection stuff
@@ -56,6 +57,7 @@ model = "../face_detector/res10_300x300_ssd_iter_140000.caffemodel"
 detector = cv2.dnn.readNetFromCaffe(proto, model)
 threshold = 0.8 # A probability threshold to increase detections or decrease false positives
 
+processed_dir = args["processed_dir"]
 originals_dir = args["originals_dir"]
 dataset = args["dataset"]
 img_paths = sorted(list(paths.list_images(originals_dir + dataset)))
@@ -120,9 +122,9 @@ for (itr, img_path) in enumerate(img_paths):
 				# preprocess.sh renames good filenames, so these new filenames will share same base as original
 				filename = os.path.basename(img_path)
 				filename, ext = os.path.splitext(filename)
-				filename = "../processed_dataset/" + dataset + "/" + filename + "_" + str(img_itr) + ext
+				filename = processed_dir + dataset + "/" + filename + "_" + str(img_itr) + ext
 				# If you were renaming here with this script, you would construct this new filename
-				#filename = "../processed_dataset/" + dataset + "/" + str(itr+1) + "_" + str(img_itr) + ".jpg"
+				#filename = processed_dir + dataset + "/" + str(itr+1) + "_" + str(img_itr) + ".jpg"
 				cv2.imwrite(filename, face)
 				total_saved += 1
 				total_saved_per_img += 1

@@ -21,7 +21,7 @@
 # You should manually rename any file that starts with "-" because commands don't like seeing that
 
 
-cd ../original_dataset
+cd ../data/original_dataset
 
 # Manually define the directries - this can be done automatically, but want to be more careful
 dirsArr=("mask" "without_mask")
@@ -104,33 +104,33 @@ do
     cd ..
 done
 
-cd ../processing
+cd ../../processing
 
 # These are the next steps of pre-processing
 # Run everything from here to ensure consistency
 
 # Run the duplicate removing script
 printf "Removing duplicates...\n\n"
-python3 remove_duplicates.py -d ../original_dataset/mask -r tru -s tru
-python3 remove_duplicates.py -d ../original_dataset/without_mask -r tru -s tru
+python3 remove_duplicates.py -d ../data/original_dataset/mask -r tru -s tru
+python3 remove_duplicates.py -d ../data/original_dataset/without_mask -r tru -s tru
 
 # Start fresh with empty directories for the processed datasets
 start_fresh=1
 if [ $start_fresh == 1 ]; then
-    rm -rf ../processed_dataset/mask
-    mkdir ../processed_dataset/mask
-    rm -rf ../processed_dataset/without_mask
-    mkdir ../processed_dataset/without_mask
+    rm -rf ../data/processed_dataset/mask
+    mkdir ../data/processed_dataset/mask
+    rm -rf ../data/processed_dataset/without_mask
+    mkdir ../data/processed_dataset/without_mask
     rm -rf double_take
     mkdir double_take
 fi
 
 # Run the script to find faces and save them in the processed datasets
 printf "\nExtracting faces...\n\n"
-python3 process_faces.py -d mask
-python3 process_faces.py -d without_mask -o tru
+python3 process_faces.py -d mask -o ../data/original_dataset/ -p ../data/processed_dataset/
+python3 process_faces.py -d without_mask -n tru -o ../data/original_dataset/ -p ../data/processed_dataset/
 
-printf "\Pre-processing complete!\n\n"
+printf "\nPre-processing complete!\n\n"
 
 
 
