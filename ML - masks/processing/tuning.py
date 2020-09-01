@@ -36,9 +36,9 @@ class Tune:
     # Pre-set optimizers for learning rates
     def optimizer(opt, epochs):
         optimizers = OrderedDict([
-	        ("SGD",  SGD(lr=0.1, decay=0.1, momentum=0.01, nesterov=True)),
-	        ("SGD2", SGD(lr=0.1, decay=0.1, momentum=0.05, nesterov=True)),
-	        ("SGD3", SGD(lr=0.1, decay=0.1, momentum=0.1, nesterov=True)),
+	        ("SGD",  SGD(lr=0.001, decay=0.1, momentum=0.01, nesterov=True)),
+	        ("SGD2", SGD(lr=0.001, decay=0.1, momentum=0.05, nesterov=True)),
+	        ("SGD3", SGD(lr=0.001, decay=0.1, momentum=0.1, nesterov=True)),
 	        ("Adam",  Adam(lr=0.001, decay=0.001/epochs)),
 	        ("Adam2", Adam(lr=0.001, decay=0.001/epochs, amsgrad=True)),
 	        ("Adam3", Adam(lr=0.001, beta_1=0.9, beta_2=0.999)),
@@ -54,7 +54,9 @@ class Tune:
     # Pre-set batch sizes (*too large will crash)
     def batch_size(size):
         batch_sizes = [
-            16, 24, 32, 42, 48, 64, 72, 128
+            16, 24, 32,
+            42, 48,
+            64, 72, 128
         ]
         if size in batch_sizes:
             return size
@@ -64,7 +66,9 @@ class Tune:
     # Pre-set image sizes to feed to the model (*too large will crash)
     def img_size(size):
         img_sizes = [
-            24, 32, 48, 64, 72
+            24, 32,
+            48,
+            64, 72
         ]
         if size in img_sizes:
             return size

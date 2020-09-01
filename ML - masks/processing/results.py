@@ -31,8 +31,8 @@ class Result:
 		f = open("processing/lb.pickle", "wb")
 		f.write(pickle.dumps(lb))
 		f.close()
-		f = open("processing/model_hxw_req.txt")
-		f.write(HXW)
+		f = open("processing/model_hxw_req.txt", "w+")
+		f.write(str(HXW))
 		f.close()
 
 

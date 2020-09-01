@@ -30,14 +30,14 @@ class Quick_Net:
 		# first set of convolutional relu and pooling layers
 		model.add(Conv2D(32, (kernel, kernel), padding="same", input_shape=inputShape))
 		model.add(Activation("relu"))
-		model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+		model.add(AveragePooling2D(pool_size=(2, 2), strides=(2, 2)))
 		model.add(Dropout(0.2))
 
 		# second set of convolutional relu and pooling layers
 		model.add(Conv2D(64, (kernel, kernel), padding="same"))
 		model.add(Activation("relu"))
-		model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-		model.add(Dropout(0.2))
+		model.add(AveragePooling2D(pool_size=(2, 2), strides=(2, 2)))
+		model.add(Dropout(0.1))
 
 		# only set of fully connected relu layers
 		model.add(Flatten())

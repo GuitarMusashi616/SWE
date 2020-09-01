@@ -107,10 +107,10 @@ for (itr, img_path) in enumerate(img_paths):
 				box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
 				# It needs some processing
 				(startX, startY, endX, endY) = box.astype("int")
-				if startY - 32 > 0:
+				'''if startY - 32 > 0:
 					startY -= 32
 				if startX - 32 > 0:
-					startX -= 32
+					startX -= 32'''
 				face = image[startY:endY+32, startX:endX+32]
 				(fH, fW) = face.shape[:2]
 				if fW < 64 or fH < 64:

@@ -29,21 +29,21 @@ import os
 
 
 ap = argparse.ArgumentParser()
-ap.add_argument("-m", "--model", default="../ML - masks/processing/model_1.model")
-ap.add_argument("-l", "--labelbin", default="../ML - masks/processing/lb_1.pickle")
-ap.add_argument("-r", "--req", default="../ML - masks/processing/model_1_hxw_req.txt")
-ap.add_argument("-s", "--size", type=int, default="48")
-ap.add_argument("-i", "--image", required=False)
+ap.add_argument("-m", "--model", default="../ML - masks/processing/model.model")
+ap.add_argument("-l", "--labelbin", default="../ML - masks/processing/lb.pickle")
+ap.add_argument("-r", "--req", default="../ML - masks/processing/model_hxw_req.txt")
+ap.add_argument("-i", "--img_size", type=int, default="32")
+ap.add_argument("-s", "--single_image", required=False)
 ap.add_argument("-d", "--dir", required=False)
 args = vars(ap.parse_args())
 
-if not args["image"] and not args["dir"]:
+if not args["single_image"] and not args["dir"]:
     print("Err, no inputs loaded")
     sys.exit(1)
 if args["dir"]:
     dataset = args["dir"]
-if args["image"]:
-    dataset = args["image"]
+if args["single_image"]:
+    dataset = args["single_image"]
 img_paths = sorted(list(paths.list_images(dataset)))
 if len(img_paths) < 1:
     print("Err, no inputs found")
@@ -58,19 +58,19 @@ threshold = 0.6
 # My trained model for making predictions
 model = load_model(args["model"])
 lb = pickle.loads(open(args["labelbin"], "rb").read())
-HXW = (args["size"])
+HXW = (args["img_size"])
 # This Keras error is not clear until you've seen it a hundred times
 f = open(args["req"], 'r')
-required_HXW = f.readline()
-required_HXW = int(required_HXW)
-if HXW != required_HXW:
-    print("Err: This model was trained with {}x{} image size".format(required_HXW, required_HXW))
-    print("{}x{} size was input - run again with arg -i {}".format(HXW, HXW, required_HXW))
+req_HXW = f.readline()
+req_HXW = int(req_HXW)
+if HXW != req_HXW:
+    print("Err: This model was trained with {}x{} image size".format(req_HXW, req_HXW))
+    print("{}x{} size was input - run again with arg -i {}".format(HXW, HXW, req_HXW))
     sys.exit(1)
 
 # dbug stuff
 dbug_imshow = False
-clas_imshow = False
+clas_imshow = True
 clas_imshow_fr = True
 dbug_print = True
 dbug_total_faces = 0
@@ -99,7 +99,6 @@ for img_path in img_paths:
         if probability > threshold:
             box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
             (start_x, start_y, endX, endY) = box.astype("int")
-            # FYI this is a necessary resize so that cv2.resize() doesn't fail
             #if start_y - 32 > 0:
                 #start_y -= 32
             ##if start_x - 32 > 0:
@@ -129,7 +128,7 @@ for img_path in img_paths:
             if prediction == lb.classes_[0]:
                 color = (255, 255, 0)
             else:
-                color = (0, 0, 255)
+                color = (32, 0, 255)
             label = "{}: {:.2f}%".format(prediction, prob[idx] * 100)
             loc = start_y - 10 if start_y - 10 > 10 else start_y + 10
             cv2.rectangle(img, (start_x, start_y), (endX, endY), color, 2)
