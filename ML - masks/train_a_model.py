@@ -22,7 +22,7 @@ import time
 
 
 ap = argparse.ArgumentParser()
-ap.add_argument("-s", "--savemodel", type=str, default="processing/model.model")
+ap.add_argument("-s", "--savemodel", type=str, default="models/model.model")
 ap.add_argument("-p", "--plot", type=str, default="processing/plots/plot.png")
 ap.add_argument("-d", "--dataset", type=str, default="processed_dataset")
 ap.add_argument("-m", "--model", type=str, default="Quick_Net")
