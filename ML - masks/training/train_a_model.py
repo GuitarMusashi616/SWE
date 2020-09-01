@@ -22,9 +22,9 @@ import time
 
 
 ap = argparse.ArgumentParser()
-ap.add_argument("-s", "--savemodel", type=str, default="models/model.model")
-ap.add_argument("-p", "--plot", type=str, default="processing/plots/plot.png")
-ap.add_argument("-d", "--dataset", type=str, default="data/processed_dataset")
+ap.add_argument("-s", "--savemodel", type=str, default="../models/model.model")
+ap.add_argument("-p", "--plot", type=str, default="../processing/plots/plot.png")
+ap.add_argument("-d", "--dataset", type=str, default="../data/processed_dataset")
 ap.add_argument("-m", "--model", type=str, default="Quick_Net")
 ap.add_argument("-a", "--aug", type=str, default="default")
 ap.add_argument("-b", "--batch_size", type=int, default=32)

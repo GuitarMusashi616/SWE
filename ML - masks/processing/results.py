@@ -78,7 +78,7 @@ class Result:
 
 	# Save the classification report and confusion matrix to file
 	def save_results(cl, cm):
-		f = open("processing/performance.txt","a+")
+		f = open("../training/performance.txt","a+")
 		f.write(cl)
 		f.write("\n")
 		f.write(np.array2string(cm))
@@ -109,7 +109,7 @@ class Result:
 			notes
 		)
 
-		f = open("processing/performance.txt","a+")
+		f = open("../training/performance.txt","a+")
 		f.write(label)
 		f.write("\n")
 		f.close()

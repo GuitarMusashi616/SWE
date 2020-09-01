@@ -29,10 +29,10 @@ bs=("-b 32 " "-b 42 ")
 #source ./venv1/bin/activate
 
 now=`date`
-printf "\n\n** Beginning auto_train.sh on $now\n\n" >> processing/performance.txt
+printf "\n\n** Beginning auto_train.sh on $now\n\n" >> performance.txt
 
-cmd="python3 -W ignore train_a_model.py -d processed_dataset"
-plot="-p processing/plots/plot"
+cmd="python3 -W ignore train_a_model.py "
+plot="-p plots/plot"
 itr=0
 
 # Loop thru kernel sizes
@@ -61,10 +61,10 @@ do
     done # image sizes
 done # kernel sizes
 
-echo Finished auto_train.sh >> processing/performance.txt
+echo Finished auto_train.sh >> performance.txt
 # List the 5 builds with the highest accuracy
-grep build processing/performance.txt | sort -k 3 -nr | head -5 | awk '{print $2 " " $3}' >> processing/performance.txt
-printf "\n\n" >> processing/performance.txt
+grep build performance.txt | sort -k 3 -nr | head -5 | awk '{print $2 " " $3}' >> performance.txt
+printf "\n\n" >> performance.txt
 
 
 
