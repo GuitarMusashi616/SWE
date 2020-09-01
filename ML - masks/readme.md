@@ -57,15 +57,13 @@ It does some further processing, such as extracting and linking class labels wit
 
 When you have determined the combination of tunings that get the best accuracy, save that model for production. A classification script will consult that model for predictions while reading from a video stream, or from input images.
 
+4. Testing
 
-4. Build an age prediction model. 
+![alt text](https://raw.githubusercontent.com/tjbergstrom/SWE/master/Classification/screen_record.gif)
 
-Without going too much into the detail, it's just another ML project. I would do a binary classification. Need images of children under the age of X and images of any and everyone older than X age. They should all be not wearing masks, as the goal is to exclude or whitelist children from the not-wearing-mask tag. Simply reuse most of the same pre-processing and neural nets (they are ready to use for any project), and train a model to predict whether an input face is under X age. Save the most accurate model, and then the classification script uses it to check whether a detected face that's not wearing a mask is a child.
-
-
+This was just to see how it works so I can adjust my training, not a final product. So it kinda works but the face detection can't detect blurry faces in low quality video frames. It might be best to start over with a different implementation. This one seems like it would be best suited to detecting faces and predicting masks for people very close to a webcam, looking forward, and not moving around. Not for streaming video like in the test.
 
 
 <br> <br>
-
 
 
