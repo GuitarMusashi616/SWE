@@ -1251,3 +1251,53 @@ weighted avg       0.85      0.81      0.80       222
  [ 40  62]]
 
 
+build: 1598928261.831872 89.8058%
+model: Quick_Net, epochs: 1, optimzer: Adam3, augmentation: default
+image size: 48, batch size: 32, kernel size: 3, dataset size: 1028
+run time: 20.21s, ../processing/plots/plot.png
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       0.95      0.86      0.90       113
+without_mask       0.85      0.95      0.89        93
+
+    accuracy                           0.90       206
+   macro avg       0.90      0.90      0.90       206
+weighted avg       0.90      0.90      0.90       206
+
+[[97 16]
+ [ 5 88]]
+
+
+build: 1598928335.444612 89.8058%
+model: Quick_Net, epochs: 1, optimzer: Adam3, augmentation: default
+image size: 48, batch size: 32, kernel size: 3, dataset size: 1028
+run time: 17.58s, plots/plot.png
+notes: (none) 
+
+              precision    recall  f1-score   support
+
+        mask       0.97      0.84      0.90       113
+without_mask       0.83      0.97      0.90        93
+
+    accuracy                           0.90       206
+   macro avg       0.90      0.90      0.90       206
+weighted avg       0.91      0.90      0.90       206
+
+[[95 18]
+ [ 3 90]]
+
+
+
+
+** Beginning auto_train.sh on Mon Aug 31 18:48:05 AKDT 2020
+
+Finished auto_train.sh
+1598877849.757144 99.0338%
+1598809025.0892692 99.0338%
+1598814131.9197366 98.5507%
+1598809930.364687 98.5507%
+1598806258.0946584 98.5507%
+
+

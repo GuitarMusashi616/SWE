@@ -14,16 +14,16 @@
 # Outputs results and metrics including a plot and saves them with the build info
 
 
-from processing.process import Pprocess
-from processing.results import Result
-from processing.tuning import Tune
+from process import Pprocess
+from results import Result
+from tuning import Tune
 import argparse
 import time
 
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-s", "--savemodel", type=str, default="../models/model.model")
-ap.add_argument("-p", "--plot", type=str, default="../processing/plots/plot.png")
+ap.add_argument("-p", "--plot", type=str, default="plots/plot.png")
 ap.add_argument("-d", "--dataset", type=str, default="../data/processed_dataset")
 ap.add_argument("-m", "--model", type=str, default="Quick_Net")
 ap.add_argument("-a", "--aug", type=str, default="default")

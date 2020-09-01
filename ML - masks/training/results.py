@@ -28,10 +28,10 @@ class Result:
 	# Save the model with classes after training
 	def save_model(model, filepath, lb, HXW):
 		model.save(filepath)
-		f = open("models/lb.pickle", "wb")
+		f = open("../models/lb.pickle", "wb")
 		f.write(pickle.dumps(lb))
 		f.close()
-		f = open("models/model_hxw_req.txt", "w+")
+		f = open("../models/model_hxw_req.txt", "w+")
 		f.write(str(HXW))
 		f.close()
 
