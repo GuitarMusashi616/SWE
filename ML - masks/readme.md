@@ -1,8 +1,10 @@
-### CSCE A401 Software Engineering Group Project
+#### CSCE A401 Software Engineering Group Project
 
-### "Humanity's Last Hope"
+#### Machine Learning: wearing or not wearing masks in real time video
 
-## Machine Learning: detect wearing / not wearing masks
+<br> 
+
+prep / research / notes / documentation
 
 <br> 
 
