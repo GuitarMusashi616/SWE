@@ -96,7 +96,7 @@ if args["device"]:
     vs = VideoStream(src=0).start()
     time.sleep(2.0)
 
-elif args["file"] is not None:
+elif args["filepath"] is not None:
 	vs = cv2.VideoCapture(args["filepath"])
 
 elif args["address"] is not None:
