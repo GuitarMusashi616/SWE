@@ -23,13 +23,14 @@ class Quick_Net:
 
 	@staticmethod
 	def build(width, height, depth, kernel, classes):
-		model = Sequential()
-		inputShape = (height, width, depth)
+		input_shape = (height, width, depth)
 		if K.image_data_format() == "channels_first":
-			inputShape = (depth, height, width)
+			input_shape = (depth, height, width)
+
+		model = Sequential()
 
 		# first set of convolutional relu and pooling layers
-		model.add(Conv2D(32, (kernel, kernel), padding="same", input_shape=inputShape))
+		model.add(Conv2D(32, (kernel, kernel), padding="same", input_shape=input_shape))
 		model.add(Activation("relu"))
 		model.add(AveragePooling2D(pool_size=(2, 2), strides=(2, 2)))
 		model.add(Dropout(0.1))
@@ -57,13 +58,14 @@ class Full_Net:
 
 	@staticmethod
 	def build(width, height, kernel, depth, classes):
-		model = Sequential()
-		inputShape = (height, width, depth)
+		input_shape = (height, width, depth)
 		if K.image_data_format() == "channels_first":
-			inputShape = (depth, height, width)
+			input_shape = (depth, height, width)
+
+		model = Sequential()
 
 		# first set of convolutional relu and pooling layers
-		model.add(Conv2D(32, (kernel, kernel), padding="same", input_shape=inputShape))
+		model.add(Conv2D(32, (kernel, kernel), padding="same", input_shape=input_shape))
 		model.add(Activation("relu"))
 		model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 		model.add(Dropout(0.2))
@@ -93,6 +95,45 @@ class Full_Net:
 
 		model.add(Dense(classes))
 		model.add(Activation("softmax"))
+
+		return model
+
+
+
+class Mobile_Net:
+
+	try:
+		from keras_applications import mobilenet_v2
+		#from keras.applications import MobileNetV2
+	except:
+		pass
+	from keras.models import Model
+
+	@staticmethod
+	def build(width, height, kernel, depth, classes):
+		input_shape = (height, width, depth)
+		if K.image_data_format() == "channels_first":
+				input_shape = (depth, height, width)
+
+		# Load MobileNet as the base
+		base = mobilenet_v2(
+			weights="imagenet",
+			include_top=False,
+			input_tensor=Input(shape=input_shape)
+		)
+
+		# Add a custom head to the base with project-specific output classes
+		head = base.output
+		head = AveragePooling2D(pool_size=(7, 7))(head)
+		head = Flatten(name="flatten")(head)
+		head = Dense(128, activation="relu")(head)
+		head = Dropout(0.5)(head)
+		head = Dense(classes, activation="softmax")(head)
+
+		model = Model(inputs=base.input, outputs=head)
+
+		for layer in base.layers:
+			layer.trainable = False
 
 		return model
 

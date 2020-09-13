@@ -15,6 +15,7 @@ from keras.optimizers import Adadelta
 from keras.optimizers import RMSprop
 from keras.optimizers import Adam
 from keras.optimizers import SGD
+from nets.net import Mobile_Net
 from nets.net import Quick_Net
 from nets.net import Full_Net
 from collections import OrderedDict
@@ -26,10 +27,13 @@ class Tune:
     def build_model(mod, HXW, channels, kernel, num_classes):
         models = [
             "Quick_Net",
-            "Full_Net"
+            "Full_Net",
+			"Mobile_Net"
         ]
         if mod == models[1]:
             return Full_Net.build(width=HXW, height=HXW, depth=channels, kernel=kernel, classes=num_classes)
+        if mod == models[2]:
+            return Mobile_Net.build(width=HXW, height=HXW, depth=channels, kernel=kernel, classes=num_classes)
         return Quick_Net.build(width=HXW, height=HXW, depth=channels, kernel=kernel, classes=num_classes)
 
 
@@ -133,9 +137,13 @@ class Tune:
             return [lr]
 
 
-    '''
-    # Pruning the model currently not supported, comment out because compatibility errors
-    import tensorflow_model_optimization as tfmot
+
+    # Pruning the model - currently not supported
+    try:
+        # Compatibility issues
+        import tensorflow_model_optimization as tfmot
+    except:
+        pass
     def prune(model):
         pruning_schedule = tfmot.sparsity.keras.PolynomialDecay(
             initial_sparsity=0.0,
@@ -145,12 +153,11 @@ class Tune:
         )
         pruned_model = tfmot.sparsity.keras.prune_low_magnitude(
             model,
-            block_size=(1,1)
-            block_pooling_type ='AVG'
+            block_size=(1,1),
+            block_pooling_type ='AVG',
             pruning_schedule=pruning_schedule
         )
         return pruned_model
-    '''
 
 
 
