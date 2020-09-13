@@ -60,7 +60,9 @@ threshold = 0.8 # A probability threshold to increase detections or decrease fal
 processed_dir = args["processed_dir"]
 originals_dir = args["originals_dir"]
 dataset = args["dataset"]
+
 img_paths = sorted(list(paths.list_images(originals_dir + dataset)))
+
 if len(img_paths) < 1:
 	print("Err: The directory", originals_dir + dataset, "was empty")
 	sys.exit(1)
@@ -69,12 +71,12 @@ total_saved = 0 # How many total faces were extracted from the dataset
 double_take = [] # List of images with zero faces extracted, they will need to be manually processed
 f = open("double_take_idx.txt","a+") # Save a log of files that you need to go back & manually process
 one_photo_per_img = args["one"] # Save time if you know there is only one face per img in the dataset
+HXW = 256
 
 print("processing:", len(img_paths), "input images from", originals_dir + dataset)
 
 
 for (itr, img_path) in enumerate(img_paths):
-	name = img_path.split(os.path.sep)[-2]
 	image = cv2.imread(img_path)
 	(h, w) = image.shape[:2]
 
@@ -88,61 +90,55 @@ for (itr, img_path) in enumerate(img_paths):
 	detector.setInput(img_blob)
 	detections = detector.forward()
 
-	# Counter to check if 0 faces were extracted
-	total_saved_per_img = 0
+	# Append this iterator to the save filepath if more than one face per image
+	img_itr = 0
 
-	if len(detections) < 1:
-		double_take.append(img_path)
-		break
-	else:
-		# Append this iterator to the save filepath if more than one face per image
-		img_itr = 0
-        # Loop through all detected faces in the image
-		for i in range(0, detections.shape[2]):
+    # Loop through all detected faces in the image
+	for i in range(0, detections.shape[2]):
+		if one_photo_per_img:
+			# Get only the one face that was detected with highest probability
+			i = np.argmax(detections[0, 0, :, 2])
+		confidence = detections[0, 0, i, 2]
+        # Only bother with faces over the threshold for true positives
+		if confidence > threshold:
+			# Start extracting the face
+			box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
+			# It needs some processing
+			(startX, startY, endX, endY) = box.astype("int")
+			'''if startY - 32 > 0:
+				startY -= 32
+			if startX - 32 > 0:
+				startX -= 32'''
+			face = image[startY:endY+32, startX:endX+32]
+			(fH, fW) = face.shape[:2]
+			if fW < 64 or fH < 64:
+				continue
+			face = imutils.resize(face, width=HXW, height=HXW)
+			# Construct a new filename
+			# preprocess.sh renames good filenames, so these new filenames will share same base as original
+			filename = os.path.basename(img_path)
+			filename, ext = os.path.splitext(filename)
+			filename = processed_dir + dataset + "/" + filename + "_" + str(img_itr) + ext
+			# If you were renaming here with this script, you would construct this new filename
+			#filename = processed_dir + dataset + "/" + str(itr+1) + "_" + str(img_itr) + ".jpg"
+			cv2.imwrite(filename, face)
+			total_saved += 1
+			img_itr += 1
 			if one_photo_per_img:
-    			# Get only the one face that was detected with highest probability
-				i = np.argmax(detections[0, 0, :, 2])
-			confidence = detections[0, 0, i, 2]
-            # Only bother with faces over the threshold for true positives
-			if confidence > threshold:
-				# Start extracting the face
-				box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
-				# It needs some processing
-				(startX, startY, endX, endY) = box.astype("int")
-				'''if startY - 32 > 0:
-					startY -= 32
-				if startX - 32 > 0:
-					startX -= 32'''
-				face = image[startY:endY+32, startX:endX+32]
-				(fH, fW) = face.shape[:2]
-				if fW < 64 or fH < 64:
-					continue
-				face = imutils.resize(face, width=256, height=256)
-				# Construct a new filename
-				# preprocess.sh renames good filenames, so these new filenames will share same base as original
-				filename = os.path.basename(img_path)
-				filename, ext = os.path.splitext(filename)
-				filename = processed_dir + dataset + "/" + filename + "_" + str(img_itr) + ext
-				# If you were renaming here with this script, you would construct this new filename
-				#filename = processed_dir + dataset + "/" + str(itr+1) + "_" + str(img_itr) + ".jpg"
-				cv2.imwrite(filename, face)
-				total_saved += 1
-				total_saved_per_img += 1
-				img_itr += 1
-				if one_photo_per_img:
-					# Exit for every face detected in the image
-					break
-			# End if probability for this face is above threshold
-		# End for every face detected in the image
-	# End if at least one face detected in this image
+				# Exit for every face detected in the image
+				break
+		# End if probability for this face is above threshold
+	# End for every face detected in the image
 
-	if total_saved_per_img == 0:
+	if img_itr == 0:
 		# Update this to the list of images that did not extract a face
 		double_take.append(img_path)
 		# Save a copy of all such files to a separate directory
 		# So you can more quickly find and manually process them
 		filename = "double_take/" + dataset + "_" + os.path.basename(img_path)
 		cv2.imwrite(filename, image)
+	# End if there were zero faces extracted from this image
+# End looping thru every image in the dataset
 
 
 print("saved", total_saved, "extracted faces images")

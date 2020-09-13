@@ -33,13 +33,15 @@ ap.add_argument("-d", "--dataset", required=True)
 ap.add_argument("-r", "--remove", type=bool, default=False)
 ap.add_argument("-s", "--show", type=bool, default=False)
 args = vars(ap.parse_args())
-hash_size = 8
 
 img_paths = list(paths.list_images(args["dataset"]))
+
 if len(img_paths) < 1:
 	print("Err: The directory", args["dataset"] + str(len(img_paths)) , "was empty")
 	sys.exit(1)
+
 hashes = {} # dictionary of hashes of all images
+hash_size = 8
 total_duplicates = 0
 
 # Part one, loop through the input images and get their hashes

@@ -6,34 +6,36 @@
 #
 # $ bash preprocess.sh
 #
-# All in one pre-processing, the script will do some file renaming processing
-# And then continue by running the other python files that do the rest of pre-processing
-# So you can run them all at once the way they are intended to run, see below
+# All in one pre-processing, the script will do some file renaming and delete bad file types.
+# And then continue by running the other python files that do the rest of pre-processing.
+# So you can run them all at once the way they are intended to run, see below.
 #
-# This is a good pre-processing step to rename all files, get rid of weird internet filenames
-# It helps in later processing steps when you need to find and manually process some images
-# Non-valid image types will be removed, such as .webp
+# It's a good pre-processing step to rename all files, get rid of weird internet filenames.
+# Need to be very careful about renaming programmatically or you will accidentally delete lots of files.
+# This has been error checked fairly well so that bad things don't happen.
+# But still it is good to backup your datasets before running anything like this.
 #
-# Need to be very careful about renaming programmatically or you will accidentally delete lots of files
-# This has been error checked fairly well so that bad things don't happen
-# But still it is good to backup your datasets before running anything like this
-#
-# You should manually rename any file that starts with "-" because commands don't like seeing that
+# You should manually rename any file that starts with "-" because Linux commands don't like seeing that
 
 
-cd ../data/original_dataset
+# Path of the dataset dir you want to process - manually set here because this is important
+original_dirs_path="../data/original_dataset"
+processed_dirs_path="../data/processed_dataset"
 
-# Manually define the directries - this can be done automatically, but want to be more careful
+# CD into the dataset dir you want to process
+cd ${original_dirs_path}
+
+# Manually define the classes dirs - this can be done automatically, but want to be more careful
 dirsArr=("mask" "without_mask")
 
 # What do you want to rename the files as, change this if you are appending to a dataset
 rename="image_"
 
-# Err check that the directories exist before doing anything, can cause big problems
+# Err check that the dirs exist before doing anything, can cause big problems if they don't
 for val in "${!dirsArr[@]}"
 do
     if [ ! -d "${dirsArr[$val]}" ]; then
-        printf "Err: The directory original_dataset/"${dirsArr[$val]}" does not exist\m"
+        printf "Err: The directory "${original_dirs_path}"/"${dirsArr[$val]}" does not exist\m"
         exit 1
     fi
     # Also check for empty directories just because
@@ -43,6 +45,7 @@ do
     fi
 done
 
+# Process each class dir in the dataset
 for val in "${!dirsArr[@]}"
 do
     # Make an empty temp directory - this implementation seems redundant but works better & safer
@@ -64,7 +67,7 @@ do
         # Manually get the file type if there is no extension
         if [ $ext == ".$img_file" ]; then
             # Update - these were all bad non-valid image types
-            # Skipping them here will delete them which is better now than never
+            # Skipping them here will delete them which is better now than later
             continue
             if [[ $(file --mime-type -b "$img_file") == "image/png" ]]; then
                 ext=".png"
@@ -104,31 +107,42 @@ do
     cd ..
 done
 
-cd ../../processing
+# We were in ML/data/masks_hiQ/original_dataset
+# Need to go back up to ML root dir
+cd ../../../processing
 
 # These are the next steps of pre-processing
 # Run everything from here to ensure consistency
+# Recall that original_dirs_path="../data/masks_hiQ/original_dataset"
 
 # Run the duplicate removing script
 printf "Removing duplicates...\n\n"
-python3 remove_duplicates.py -d ../data/original_dataset/mask -r tru -s tru
-python3 remove_duplicates.py -d ../data/original_dataset/without_mask -r tru -s tru
+python3 remove_duplicates.py -d "${original_dirs_path}"/mask -r tru -s tru
+python3 remove_duplicates.py -d "${original_dirs_path}"/without_mask -r tru -s tru
 
 # Start fresh with empty directories for the processed datasets
 start_fresh=1
 if [ $start_fresh == 1 ]; then
-    rm -rf ../data/processed_dataset/mask
-    mkdir ../data/processed_dataset/mask
-    rm -rf ../data/processed_dataset/without_mask
-    mkdir ../data/processed_dataset/without_mask
+    rm -rf "${processed_dirs_path}"
+    mkdir "${processed_dirs_path}"
+    rm -rf "${processed_dirs_path}"/mask
+    mkdir "${processed_dirs_path}"/mask
+    rm -rf "${processed_dirs_path}"/without_mask
+    mkdir "${processed_dirs_path}"/without_mask
     rm -rf double_take
     mkdir double_take
 fi
 
 # Run the script to find faces and save them in the processed datasets
-printf "\nExtracting faces...\n\n"
-python3 process_faces.py -d mask -o ../data/original_dataset/ -p ../data/processed_dataset/
-python3 process_faces.py -d without_mask -n tru -o ../data/original_dataset/ -p ../data/processed_dataset/
+get_faces=1
+if [ $get_faces == 1 ]; then
+    printf "\nExtracting faces...\n\n"
+    python3 process_faces.py -d mask -o "${original_dirs_path}"/ -p "${processed_dirs_path}"/
+    python3 process_faces.py -d without_mask -n tru -o "${original_dirs_path}"/ -p "${processed_dirs_path}"/
+# Or just copy over all of the images if this is a dataset without extractable faces
+else
+    cp "${original_dirs_path}" "${processed_dirs_path}"
+fi
 
 printf "\nPre-processing complete!\n\n"
 
