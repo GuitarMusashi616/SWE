@@ -4,9 +4,9 @@
 # September 2020
 # Software Engineering Project
 #
-# python3 input_livestream.py -u https://www.youtube.com/watch?v=21X5lGlDOfg
-#
 # Trying out getting a livestream as video input
+#
+# $ python3 input_livestream.py -u https://www.youtube.com/watch?v=21X5lGlDOfg
 
 
 import cv2
@@ -20,9 +20,6 @@ from imutils.video import VideoStream
 import m3u8
 import streamlink
 import urllib
-from threading import Thread
-import subprocess
-from ffmpeg_streaming import Formats
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-u", "--url", default=None)
@@ -31,9 +28,12 @@ args = vars(ap.parse_args())
 url = args["url"]
 
 #try_impl = 1
-try_impl = 2
+#try_impl = 2
 #try_impl = 3
 #try_impl = 4
+#try_impl = 5
+#try_impl = 6
+try_impl = 7
 
 
 ############
@@ -44,8 +44,8 @@ try_impl = 2
 
 # The basic idea is downloading the stream in chunks and saving the chunks.
 # Then reading the chunks as you would normally read video from file.
-# But I think this is meant for just saving a stream and not working with it.
-# So just need to try adjusting it with multithreading.
+# But I think it's meant for just saving a stream and not working with it simultaneously.
+# Maybe it would work with multi-threading
 
 def get_livestream(url):
     print("Getting live stream")
@@ -79,9 +79,11 @@ if try_impl == 1:
 #
 ############
 
-# It seems like the intuitive way of reading frames from the livestream and
+# Seems like the intuitive way of reading frames from the livestream and
 # always updating the current frame with a while true loop.
-# But I think the issue is that cv2.VideoCapture() is not meant for live streams.
+# But I think the issue is that cv2.VideoCapture() doesn't work for live streams.
+
+from threading import Thread
 
 class live_stream(object):
     def __init__(self, src):
@@ -135,7 +137,9 @@ if try_impl == 2:
 ############
 
 # todo
-# Do it with ffmpeg which requires some weird stuff
+# Do it with ffmpeg which requires some weird ffmpeg stuff
+
+from ffmpeg_streaming import Formats
 
 def ffmpeg_livestream(url):
     video = ffmpeg_streaming.input(url)
@@ -157,12 +161,13 @@ if try_impl == 3:
 ############
 
 # todo
-# This is actually pretty cool
+# This looks pretty cool
+# Multi-threading upload while downloading
 # https://flashphoner.com/how-to-grab-a-video-from-youtube-and-share-it-via-webrtc-in-real-time/
 
+import subprocess
 
-
-def dwnld_livestream(url, stream_id, destination)
+def dwnld_livestream(url, stream_id, destination):
     _youtube_process = subprocess.Popen(
         ('youtube-dl','-f','','--prefer-ffmpeg',
         '--no-color', '--no-cache-dir', '--no-progress',
@@ -178,6 +183,77 @@ def dwnld_livestream(url, stream_id, destination)
 
 if try_impl == 4:
     dwnld_livestream(url, "output", "https://...")
+
+
+
+############
+#
+# A fifth implementation
+#
+############
+
+import pafy
+
+def pafy_livestream(url):
+    p = pafy.new(url)
+    best = p.getbest(preftype="webm")
+    vs = cv2.VideoCapture()
+    vs.open(best.url)
+    while True:
+        frame = vs.read()
+        cv2.imshow("Output Stream", frame)
+        cv2.waitKey(1) & 0xFF
+
+if try_impl == 5:
+    pafy_livestream(url)
+
+
+
+############
+#
+# A sixth implementation
+#
+############
+
+# This actually works but only with youtube livestreams
+
+from vidgear.gears import CamGear
+
+def vidgear_livestream(url):
+    vs = CamGear(
+        source=url,
+        y_tube=True
+    ).start()
+    while True:
+        frame = vs.read()
+        if frame is None:
+            break
+        frame = imutils.resize(frame, width=500)
+        cv2.imshow("Output Stream", frame)
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord("q"):
+            break
+
+if try_impl == 6:
+    vidgear_livestream(url)
+
+
+
+############
+#
+# This obviously never worked either, maybe just a simple error?
+#
+############
+
+def vidcap(url):
+    vs = cv2.VideoCapture(url)
+    while True:
+        frame = vs.read()
+        cv2.imshow("Output Stream", frame)
+        cv2.waitKey(1) & 0xFF
+
+if try_impl == 7:
+    vidcap(url)
 
 
 
